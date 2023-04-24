@@ -7,6 +7,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
+import useRealtime from '@/hooks/useRealtime';
 
 import useErrorService from '@/services/errorService';
 import useApiService from '@/services/useApiService';
@@ -39,6 +40,7 @@ import Promptbar from '@/components/Promptbar';
 import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
+import supabaseClient from '@/lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
@@ -56,10 +58,13 @@ const Home = ({
   const { getModels } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
+  const [meetingCode, setMeetingCode] = useState<string>('');
 
   const contextValue = useCreateReducer<HomeInitialState>({
     initialState,
   });
+
+  const realTime = useRealtime('channelName', 'userId');
 
   const {
     state: {
@@ -383,7 +388,10 @@ const Home = ({
             <Chatbar />
 
             <div className="flex flex-1">
-              <Chat stopConversationRef={stopConversationRef} />
+              <Chat
+                stopConversationRef={stopConversationRef}
+                realTime={realTime}
+              />
             </div>
 
             <Promptbar />

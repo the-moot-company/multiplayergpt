@@ -29,16 +29,19 @@ import Spinner from '../Spinner';
 import { ChatInput } from './ChatInput';
 import { ChatLoader } from './ChatLoader';
 import { ErrorMessageDiv } from './ErrorMessageDiv';
+import { MemoizedChatMessage } from './MemoizedChatMessage';
 import { ModelSelect } from './ModelSelect';
 import { SystemPrompt } from './SystemPrompt';
 import { TemperatureSlider } from './Temperature';
-import { MemoizedChatMessage } from './MemoizedChatMessage';
+
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
+  realTime: RealtimeChannel;
 }
 
-export const Chat = memo(({ stopConversationRef }: Props) => {
+export const Chat = memo(({ stopConversationRef, realTime }: Props) => {
   const { t } = useTranslation('chat');
 
   const {
@@ -55,8 +58,16 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
       prompts,
     },
     handleUpdateConversation,
-    dispatch: homeDispatch,
+    dispatch,
   } = useContext(HomeContext);
+
+  const homeDispatch = (item, bypassTracking = false) => {
+    if (!bypassTracking && item.field === 'selectedConversation') {
+      realTime.track(item.value);
+    }
+
+    dispatch(item);
+  };
 
   const [currentMessage, setCurrentMessage] = useState<Message>();
   const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
@@ -307,13 +318,15 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   };
   const throttledScrollDown = throttle(scrollDown, 250);
 
-  // useEffect(() => {
-  //   console.log('currentMessage', currentMessage);
-  //   if (currentMessage) {
-  //     handleSend(currentMessage);
-  //     homeDispatch({ field: 'currentMessage', value: undefined });
-  //   }
-  // }, [currentMessage]);
+  useEffect(() => {
+    console.log('useEffecting');
+    realTime.on('presence', { event: 'sync' }, () => {
+      const newState = realTime.presenceState();
+
+      // homeDispatch({ field: 'selectedConversation', value: newState }, true);
+      console.log(newState);
+    });
+  }, [realTime]);
 
   useEffect(() => {
     throttledScrollDown();
