@@ -47,7 +47,7 @@ export const PromptFolders = () => {
 
   return (
     <div className="flex w-full flex-col pt-2">
-      {folders
+      {/* {folders
         .filter((folder) => folder.type === 'prompt')
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((folder, index) => (
@@ -58,7 +58,7 @@ export const PromptFolders = () => {
             handleDrop={handleDrop}
             folderComponent={PromptFolders(folder)}
           />
-        ))}
+        ))} */}
     </div>
   );
 };

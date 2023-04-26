@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
 import { useTranslation } from 'next-i18next';
 
@@ -24,6 +25,7 @@ import Sidebar from '../Sidebar';
 import ChatbarContext from './Chatbar.context';
 import { ChatbarInitialState, initialState } from './Chatbar.state';
 
+import supabase from '@/lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Chatbar = () => {
@@ -34,7 +36,14 @@ export const Chatbar = () => {
   });
 
   const {
-    state: { conversations, showChatbar, defaultModelId, folders, pluginKeys },
+    state: {
+      conversations,
+      showChatbar,
+      defaultModelId,
+      folders,
+      pluginKeys,
+      roomId,
+    },
     dispatch: homeDispatch,
     handleCreateFolder,
     handleNewConversation,
@@ -111,7 +120,7 @@ export const Chatbar = () => {
     window.location.reload();
   };
 
-  const handleClearConversations = () => {
+  const handleClearConversations = async () => {
     defaultModelId &&
       homeDispatch({
         field: 'selectedConversation',
@@ -135,12 +144,34 @@ export const Chatbar = () => {
 
     homeDispatch({ field: 'folders', value: updatedFolders });
     saveFolders(updatedFolders);
+
+    const { data, error } = await supabase
+      .from('conversation')
+      .update({ deleted: true })
+      .eq('roomId', roomId);
+
+    // @Incomplete - errror handling
+    if (error) {
+      console.error(error);
+      toast.error('Error deleting conversations');
+    }
   };
 
-  const handleDeleteConversation = (conversation: Conversation) => {
+  const handleDeleteConversation = async (conversation: Conversation) => {
     const updatedConversations = conversations.filter(
       (c) => c.id !== conversation.id,
     );
+
+    const { data, error } = await supabase
+      .from('conversation')
+      .update({ deleted: true })
+      .eq('id', conversation.id);
+
+    // @Incomplete - errror handling
+    if (error) {
+      console.error(error);
+      toast.error('Error deleting conversation');
+    }
 
     homeDispatch({ field: 'conversations', value: updatedConversations });
     chatDispatch({ field: 'searchTerm', value: '' });
@@ -187,10 +218,14 @@ export const Chatbar = () => {
   };
 
   useEffect(() => {
+    const nonDeletedConversations = conversations.filter(
+      (c) => c.deleted !== true,
+    );
+
     if (searchTerm) {
       chatDispatch({
         field: 'filteredConversations',
-        value: conversations.filter((conversation) => {
+        value: nonDeletedConversations.filter((conversation) => {
           const searchable =
             conversation.name.toLocaleLowerCase() +
             ' ' +
@@ -201,7 +236,7 @@ export const Chatbar = () => {
     } else {
       chatDispatch({
         field: 'filteredConversations',
-        value: conversations,
+        value: nonDeletedConversations,
       });
     }
   }, [searchTerm, conversations]);

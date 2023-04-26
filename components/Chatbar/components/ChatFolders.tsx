@@ -47,7 +47,7 @@ export const ChatFolders = ({ searchTerm }: Props) => {
 
   return (
     <div className="flex w-full flex-col pt-2">
-      {folders
+      {/* {folders
         .filter((folder) => folder.type === 'chat')
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((folder, index) => (
@@ -58,7 +58,7 @@ export const ChatFolders = ({ searchTerm }: Props) => {
             handleDrop={handleDrop}
             folderComponent={ChatFolders(folder)}
           />
-        ))}
+        ))} */}
     </div>
   );
 };

@@ -126,14 +126,14 @@ export const importData = (
     (conversation, index, self) =>
       index === self.findIndex((c) => c.id === conversation.id),
   );
-  localStorage.setItem('conversationHistory', JSON.stringify(newHistory));
+  // localStorage.setItem('conversationHistory', JSON.stringify(newHistory));
   if (newHistory.length > 0) {
-    localStorage.setItem(
-      'selectedConversation',
-      JSON.stringify(newHistory[newHistory.length - 1]),
-    );
+    // localStorage.setItem(
+    //   'selectedConversation',
+    //   JSON.stringify(newHistory[newHistory.length - 1]),
+    // );
   } else {
-    localStorage.removeItem('selectedConversation');
+    // localStorage.removeItem('selectedConversation');
   }
 
   const oldFolders = localStorage.getItem('folders');

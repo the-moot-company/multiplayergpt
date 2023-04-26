@@ -29,10 +29,13 @@ import Spinner from '../Spinner';
 import { ChatInput } from './ChatInput';
 import { ChatLoader } from './ChatLoader';
 import { ErrorMessageDiv } from './ErrorMessageDiv';
+import { MemoizedChatMessage } from './MemoizedChatMessage';
 import { ModelSelect } from './ModelSelect';
 import { SystemPrompt } from './SystemPrompt';
 import { TemperatureSlider } from './Temperature';
-import { MemoizedChatMessage } from './MemoizedChatMessage';
+
+import supabase from '@/lib/supabase';
+import { log } from 'console';
 
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
@@ -55,8 +58,21 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
       prompts,
     },
     handleUpdateConversation,
-    dispatch: homeDispatch,
+    dispatch,
   } = useContext(HomeContext);
+
+  const homeDispatch = useCallback(
+    async (action) => {
+      if (action.field === 'loading') {
+        const { error } = await supabase
+          .from('conversation')
+          .update({ loading: action.value })
+          .eq('id', selectedConversation?.id)
+          .single();
+      }
+    },
+    [selectedConversation?.id],
+  );
 
   const [currentMessage, setCurrentMessage] = useState<Message>();
   const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
@@ -87,6 +103,20 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             messages: [...selectedConversation.messages, message],
           };
         }
+
+        const { error } = await supabase.from('message').insert([
+          {
+            conversationId: selectedConversation.id,
+            role: message.role,
+            content: message.content,
+          },
+        ]);
+
+        // @Incomplete - error handling
+        if (error) {
+          console.error(error);
+        }
+
         homeDispatch({
           field: 'selectedConversation',
           value: updatedConversation,
@@ -145,8 +175,19 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
               ...updatedConversation,
               name: customName,
             };
+
+            // update name of the conversation on supabase
+            const { error } = await supabase
+              .from('conversation')
+              .update({ name: customName })
+              .eq('id', selectedConversation.id);
+
+            // @Incomplete - error handling
+            if (error) {
+              console.error(error);
+            }
           }
-          homeDispatch({ field: 'loading', value: false });
+
           const reader = data.getReader();
           const decoder = new TextDecoder();
           let done = false;
@@ -172,10 +213,10 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                 ...updatedConversation,
                 messages: updatedMessages,
               };
-              homeDispatch({
-                field: 'selectedConversation',
-                value: updatedConversation,
-              });
+              // homeDispatch({
+              //   field: 'selectedConversation',
+              //   value: updatedConversation,
+              // });
             } else {
               const updatedMessages: Message[] =
                 updatedConversation.messages.map((message, index) => {
@@ -191,10 +232,11 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                 ...updatedConversation,
                 messages: updatedMessages,
               };
-              homeDispatch({
-                field: 'selectedConversation',
-                value: updatedConversation,
-              });
+
+              // homeDispatch({
+              //   field: 'selectedConversation',
+              //   value: updatedConversation,
+              // });
             }
           }
           saveConversation(updatedConversation);
@@ -209,9 +251,27 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           if (updatedConversations.length === 0) {
             updatedConversations.push(updatedConversation);
           }
-          homeDispatch({ field: 'conversations', value: updatedConversations });
+          // homeDispatch({ field: 'conversations', value: updatedConversations });
           saveConversations(updatedConversations);
           homeDispatch({ field: 'messageIsStreaming', value: false });
+
+          // @Incomplete - herte
+
+          // @Incomplete - what happens if the user closes the tab while text is still streaming
+          const newMessage = { role: 'assistant', content: text };
+          homeDispatch({ field: 'loading', value: false });
+          const { error } = await supabase.from('message').insert([
+            {
+              conversationId: selectedConversation.id,
+              role: newMessage.role,
+              content: newMessage.content,
+            },
+          ]);
+
+          // @Incomplete - error handling
+          if (error) {
+            console.error(error);
+          }
         } else {
           const { answer } = await response.json();
           const updatedMessages: Message[] = [
@@ -251,6 +311,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
       pluginKeys,
       selectedConversation,
       stopConversationRef,
+      homeDispatch,
     ],
   );
 
@@ -308,7 +369,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   const throttledScrollDown = throttle(scrollDown, 250);
 
   // useEffect(() => {
-  //   console.log('currentMessage', currentMessage);
   //   if (currentMessage) {
   //     handleSend(currentMessage);
   //     homeDispatch({ field: 'currentMessage', value: undefined });
@@ -396,7 +456,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             ref={chatContainerRef}
             onScroll={handleScroll}
           >
-            {selectedConversation?.messages.length === 0 ? (
+            {selectedConversation?.messages?.length === 0 ? (
               <>
                 <div className="mx-auto flex flex-col space-y-5 md:space-y-10 px-3 pt-5 md:pt-12 sm:max-w-[600px]">
                   <div className="text-center text-3xl font-semibold text-gray-800 dark:text-gray-100">
@@ -424,7 +484,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                         }
                       />
 
-                      <TemperatureSlider
+                      {/* <TemperatureSlider
                         label={t('Temperature')}
                         onChangeTemperature={(temperature) =>
                           handleUpdateConversation(selectedConversation, {
@@ -432,7 +492,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                             value: temperature,
                           })
                         }
-                      />
+                      /> */}
                     </div>
                   )}
                 </div>
@@ -440,20 +500,20 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             ) : (
               <>
                 <div className="sticky top-0 z-10 flex justify-center border border-b-neutral-300 bg-neutral-100 py-2 text-sm text-neutral-500 dark:border-none dark:bg-[#444654] dark:text-neutral-200">
-                  {t('Model')}: {selectedConversation?.model.name} | {t('Temp')}
-                  : {selectedConversation?.temperature} |
+                  {/* {t('Model')}: {selectedConversation?.model.name} | {t('Temp')}
+                  : {selectedConversation?.temperature} | */}
                   <button
                     className="ml-2 cursor-pointer hover:opacity-50"
                     onClick={handleSettings}
                   >
                     <IconSettings size={18} />
                   </button>
-                  <button
+                  {/* <button
                     className="ml-2 cursor-pointer hover:opacity-50"
                     onClick={onClearAll}
                   >
                     <IconClearAll size={18} />
-                  </button>
+                  </button> */}
                 </div>
                 {showSettings && (
                   <div className="flex flex-col space-y-10 md:mx-auto md:max-w-xl md:gap-6 md:py-3 md:pt-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl">
