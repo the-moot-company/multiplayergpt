@@ -1,5 +1,5 @@
 import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -40,6 +40,7 @@ const Sidebar = <T,>({
   handleCreateFolder,
   handleDrop,
 }: Props<T>) => {
+  const [inputValue, setInputValue] = useState('');
   const { t } = useTranslation('promptbar');
 
   const allowDrop = (e: any) => {
@@ -54,11 +55,31 @@ const Sidebar = <T,>({
     e.target.style.background = 'none';
   };
 
+  useEffect(() => {
+    const storedValue = localStorage.getItem('name');
+    if (storedValue) {
+      setInputValue(storedValue);
+    }
+  }, []);
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
+    localStorage.setItem('name', value);
+  };
+
   return isOpen ? (
     <div>
       <div
         className={`fixed top-0 ${side}-0 z-40 flex h-full w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0`}
       >
+        <input
+          className="text-black"
+          type="text"
+          value={inputValue}
+          onChange={handleChange}
+          placeholder="Your name"
+        />
         <div className="flex items-center">
           <button
             className="text-sidebar flex w-[190px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10"
