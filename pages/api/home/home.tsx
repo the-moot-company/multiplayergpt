@@ -51,6 +51,17 @@ interface Props {
   room: any;
 }
 
+const userColors = [
+  '#FF7262',
+  '#F5BD80',
+  '#F8DC61',
+  '#CDF87F',
+  '#94B1F5',
+  '#C2C7F4',
+  '#F6DBE1',
+  '#EDF0F5',
+];
+
 const Home = ({
   serverSideApiKeyIsSet,
   serverSidePluginKeysSet,
@@ -307,7 +318,7 @@ const Home = ({
     presenceChannel.track({
       selectedConversationId: selectedConversation?.id,
       name: uuidv4(),
-      colour: 'red',
+      colour: localStorage.getItem('name') ?? 'Anonymous',
     });
   }, [roomId, selectedConversation?.id]);
 
