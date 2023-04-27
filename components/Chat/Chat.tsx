@@ -106,6 +106,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
 
         const { error } = await supabase.from('message').insert([
           {
+            author: localStorage.getItem('name') ?? 'Anonymous',
             conversationId: selectedConversation.id,
             role: message.role,
             content: message.content,
@@ -260,11 +261,13 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           // @Incomplete - what happens if the user closes the tab while text is still streaming
           const newMessage = { role: 'assistant', content: text };
           homeDispatch({ field: 'loading', value: false });
+
           const { error } = await supabase.from('message').insert([
             {
               conversationId: selectedConversation.id,
               role: newMessage.role,
               content: newMessage.content,
+              author: localStorage.getItem('name') ?? 'Anonymous',
             },
           ]);
 

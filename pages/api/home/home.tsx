@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useQuery } from 'react-query';
 
@@ -66,7 +66,7 @@ const Home = ({
   const roomId = room.id;
 
   const contextValue = useCreateReducer<HomeInitialState>({
-    initialState: { ...initialState, roomId },
+    initialState: { ...initialState, roomId, userPresences: [] },
   });
 
   const {
@@ -217,8 +217,6 @@ const Home = ({
     saveConversation(newConversation);
     saveConversations(updatedConversations);
 
-    // insert new conversation into db
-
     const { data, error } = await supabase.from('conversation').insert([
       {
         id: newConversation.id,
@@ -282,6 +280,38 @@ const Home = ({
   // ON LOAD --------------------------------------------
 
   useEffect(() => {
+    const channelName = `moot-${roomId}`;
+
+    const presenceChannel = supabase.channel(channelName, {
+      config: {
+        presence: {
+          // @Incomplete - should be the user's name?
+          key: uuidv4(),
+        },
+      },
+    });
+
+    presenceChannel
+      .on('presence', { event: 'sync' }, () => {
+        const currentUsers = Object.values(presenceChannel.presenceState()).map(
+          (entry) => entry[0],
+        );
+
+        dispatch({
+          field: 'userPresences',
+          value: currentUsers == null ? [] : currentUsers,
+        });
+      })
+      .subscribe();
+
+    presenceChannel.track({
+      selectedConversationId: selectedConversation?.id,
+      name: uuidv4(),
+      colour: 'red',
+    });
+  }, [roomId, selectedConversation?.id]);
+
+  useEffect(() => {
     const allConversationIds = conversations.map((c) => c.id);
 
     let errorToastId: undefined | string;
@@ -296,7 +326,6 @@ const Home = ({
           event: '*',
         },
         (payload) => {
-          console.log('message change');
           if (!allConversationIds.includes(payload.new.conversationId)) {
             return;
           }
@@ -366,7 +395,6 @@ const Home = ({
           filter: `roomId=eq.${roomId}`,
         },
         (payload) => {
-          console.log('conversation change');
           if (payload.eventType === 'INSERT') {
             const newConversation = { ...payload.new, messages: [] };
             const updatedConversations = [...conversations, newConversation];
