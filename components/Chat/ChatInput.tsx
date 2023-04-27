@@ -48,7 +48,7 @@ export const ChatInput = ({
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, messageIsStreaming, prompts },
+    state: { selectedConversation, prompts, loading, messageIsStreaming },
 
     dispatch: homeDispatch,
   } = useContext(HomeContext);
@@ -88,7 +88,7 @@ export const ChatInput = ({
   };
 
   const handleSend = () => {
-    if (messageIsStreaming) {
+    if (messageIsStreaming || loading) {
       return;
     }
 
