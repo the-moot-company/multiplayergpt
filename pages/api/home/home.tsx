@@ -74,6 +74,8 @@ const Home = ({
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
 
+  const presenceChannelRef = useRef<any>(null);
+
   const roomId = room.id;
 
   const contextValue = useCreateReducer<HomeInitialState>({
@@ -328,14 +330,9 @@ const Home = ({
       })
       .subscribe();
 
-    const name = localStorage.getItem('name');
-
-    presenceChannel.track({
-      selectedConversationId: selectedConversation?.id,
-      name: name && name !== '' ? name : 'Anonymous',
-      colour: 'red',
-    });
-  }, [roomId, selectedConversation?.id]);
+    // presenceChannel tracking happens in ChatInput.tsx
+    presenceChannelRef.current = presenceChannel;
+  }, [roomId, dispatch]);
 
   useEffect(() => {
     const allConversationIds = conversations.map((c) => c.id);
@@ -607,6 +604,7 @@ const Home = ({
         handleUpdateFolder,
         handleSelectConversation,
         handleUpdateConversation,
+        presenceChannelRef,
       }}
     >
       <Head>
