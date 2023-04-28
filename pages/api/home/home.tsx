@@ -580,12 +580,11 @@ const Home = ({
         id: uuidv4(),
         name: t('New Conversation'),
         messages: [],
-        model: OpenAIModels[defaultModelId],
+        // model: OpenAIModel s[defaultModelId],
         prompt: DEFAULT_SYSTEM_PROMPT,
         temperature: DEFAULT_TEMPERATURE,
-        folderId: null,
+        // folderId: null,
       };
-
       dispatch({
         field: 'selectedConversation',
         value: lastConversation,
@@ -660,6 +659,21 @@ export const getServerSideProps: GetServerSideProps = async ({
       .single();
 
     // @Incomplete - error
+    if (error) {
+      console.error(error);
+      return {
+        notFound: true,
+      };
+    }
+
+    const { data: conversationData, error: conversationError } = await supabase
+      .from('conversation')
+      .insert({
+        roomId: room.id,
+        name: 'New Conversation',
+        prompt: DEFAULT_SYSTEM_PROMPT,
+        temperature: DEFAULT_TEMPERATURE,
+      });
     if (error) {
       console.error(error);
       return {
