@@ -247,7 +247,7 @@ const Home = ({
     }
   };
 
-  const handleUpdateConversation = (
+  const handleUpdateConversation = async (
     conversation: Conversation,
     data: KeyValuePair,
   ) => {
@@ -261,7 +261,20 @@ const Home = ({
       conversations,
     );
 
-    // @Incomplete - update db
+    const { error } = await supabase
+      .from('conversation')
+      .update([
+        {
+          name: updatedConversation.name,
+        },
+      ])
+      .eq('id', updatedConversation.id);
+
+    // @Incomplete - error handling
+    if (error) {
+      console.error(error);
+    }
+
     dispatch({ field: 'selectedConversation', value: single });
     dispatch({ field: 'conversations', value: all });
   };
