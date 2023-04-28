@@ -36,38 +36,38 @@ export const ChatbarSettings = () => {
     handleApiKeyChange,
   } = useContext(ChatbarContext);
 
-  return (
-    <div className="flex flex-col items-center text-sm">
-      {conversations.length > 0 ? (
-        <ClearConversations onClearConversations={handleClearConversations} />
-      ) : null}
+  return null;
+  // <div className="flex flex-col items-center space-y-1 border-t border-white/20 pt-1 text-sm">
+  //   {conversations.length > 0
+  //     ? // <ClearConversations onClearConversations={handleClearConversations} />
+  //       null
+  //     : null}
 
-      {/* <Import onImport={handleImportConversations} /> */}
-      {/* 
-      <SidebarButton
-        text={t('Export data')}
-        icon={<IconFileExport size={18} />}
-        onClick={() => handleExportData()}
-      /> */}
+  //   {/* <Import onImport={handleImportConversations} /> */}
+  //   {/*
+  //   <SidebarButton
+  //     text={t('Export data')}
+  //     icon={<IconFileExport size={18} />}
+  //     onClick={() => handleExportData()}
+  //   /> */}
 
-      {/* <SidebarButton
-        text={t('Settings')}
-        icon={<IconSettings size={18} />}
-        onClick={() => setIsSettingDialog(true)}
-      /> */}
+  //   {/* <SidebarButton
+  //     text={t('Settings')}
+  //     icon={<IconSettings size={18} />}
+  //     onClick={() => setIsSettingDialog(true)}
+  //   /> */}
 
-      {!serverSideApiKeyIsSet ? (
-        <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
-      ) : null}
+  //   {!serverSideApiKeyIsSet ? (
+  //     <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
+  //   ) : null}
 
-      {/* {!serverSidePluginKeysSet ? <PluginKeys /> : null} */}
+  //   {/* {!serverSidePluginKeysSet ? <PluginKeys /> : null} */}
 
-      <SettingDialog
-        open={isSettingDialogOpen}
-        onClose={() => {
-          setIsSettingDialog(false);
-        }}
-      />
-    </div>
-  );
+  //   <SettingDialog
+  //     open={isSettingDialogOpen}
+  //     onClose={() => {
+  //       setIsSettingDialog(false);
+  //     }}
+  //   />
+  // </div>
 };

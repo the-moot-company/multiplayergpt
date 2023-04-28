@@ -9,7 +9,7 @@ export const CloseSidebarButton = ({ onClick, side }: Props) => {
   return (
     <>
       <button
-        className={`mt-2 ${
+        className={`mt-2 flex md:hidden ${
           side === 'right' ? 'right-[270px]' : 'left-[270px]'
         } z-50 h-7 w-7 hover:text-gray-400 dark:text-white dark:hover:text-gray-300 sm:top-0.5 sm:${
           side === 'right' ? 'right-[270px]' : 'left-[270px]'

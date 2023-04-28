@@ -4,7 +4,7 @@ import {
   IconMistOff,
   IconPlus,
 } from '@tabler/icons-react';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Image from 'next/image';
@@ -49,6 +49,7 @@ const Sidebar = <T,>({
   handleCreateFolder,
   handleDrop,
 }: Props<T>) => {
+  const [inputValue, setInputValue] = useState('');
   const { t } = useTranslation('promptbar');
 
   const allowDrop = (e: any) => {
@@ -61,6 +62,19 @@ const Sidebar = <T,>({
 
   const removeHighlight = (e: any) => {
     e.target.style.background = 'none';
+  };
+
+  useEffect(() => {
+    const storedValue = localStorage.getItem('name');
+    if (storedValue) {
+      setInputValue(storedValue);
+    }
+  }, []);
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
+    localStorage.setItem('name', value);
   };
 
   return isOpen ? (
@@ -101,6 +115,8 @@ const Sidebar = <T,>({
             type="text"
             placeholder="Jarvis"
             className="rounded-md border border-base-300 bg-base-200 p-2 h-12 flex items-center"
+            value={inputValue}
+            onChange={handleChange}
           />
         </div>
         <div

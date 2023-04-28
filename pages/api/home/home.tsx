@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useQuery } from 'react-query';
 
@@ -51,6 +51,17 @@ interface Props {
   room: any;
 }
 
+const userColors = [
+  '#FF7262',
+  '#F5BD80',
+  '#F8DC61',
+  '#CDF87F',
+  '#94B1F5',
+  '#C2C7F4',
+  '#F6DBE1',
+  '#EDF0F5',
+];
+
 const Home = ({
   serverSideApiKeyIsSet,
   serverSidePluginKeysSet,
@@ -63,10 +74,12 @@ const Home = ({
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
 
+  const presenceChannelRef = useRef<any>(null);
+
   const roomId = room.id;
 
   const contextValue = useCreateReducer<HomeInitialState>({
-    initialState: { ...initialState, roomId },
+    initialState: { ...initialState, roomId, userPresences: [] },
   });
 
   const {
@@ -104,11 +117,6 @@ const Home = ({
   }, [data, dispatch]);
 
   useEffect(() => {
-    // const bob = async () => {
-    //   const rooms = await supabase.from('room').select('*');
-
-    // };
-    // bob();
     dispatch({ field: 'modelError', value: getModelsError(error) });
   }, [dispatch, error, getModelsError]);
 
@@ -217,8 +225,6 @@ const Home = ({
     saveConversation(newConversation);
     saveConversations(updatedConversations);
 
-    // insert new conversation into db
-
     const { data, error } = await supabase.from('conversation').insert([
       {
         id: newConversation.id,
@@ -238,7 +244,7 @@ const Home = ({
     }
   };
 
-  const handleUpdateConversation = (
+  const handleUpdateConversation = async (
     conversation: Conversation,
     data: KeyValuePair,
   ) => {
@@ -252,7 +258,20 @@ const Home = ({
       conversations,
     );
 
-    // @Incomplete - update db
+    const { error } = await supabase
+      .from('conversation')
+      .update([
+        {
+          name: updatedConversation.name,
+        },
+      ])
+      .eq('id', updatedConversation.id);
+
+    // @Incomplete - error handling
+    if (error) {
+      console.error(error);
+    }
+
     dispatch({ field: 'selectedConversation', value: single });
     dispatch({ field: 'conversations', value: all });
   };
@@ -282,6 +301,46 @@ const Home = ({
   // ON LOAD --------------------------------------------
 
   useEffect(() => {
+    const channelName = `moot-${roomId}`;
+
+    const presenceChannel = supabase.channel(channelName, {
+      config: {
+        presence: {
+          // @Incomplete - should be the user's name?
+          key: uuidv4(),
+        },
+      },
+    });
+
+    presenceChannel
+      .on('presence', { event: 'sync' }, () => {
+        const currentUsers = Object.values(presenceChannel.presenceState()).map(
+          (entry) => entry[0],
+        );
+        dispatch({
+          field: 'userPresences',
+          value: currentUsers == null ? [] : currentUsers,
+        });
+      })
+      .on('broadcast', { event: 'typing' }, (payload) => {
+        if (payload.payload.content === '') {
+          dispatch({
+            field: 'userTyping',
+            value: null,
+          });
+        }
+        dispatch({
+          field: 'userTyping',
+          value: payload.payload,
+        });
+      })
+      .subscribe();
+
+    // presenceChannel tracking happens in ChatInput.tsx
+    presenceChannelRef.current = presenceChannel;
+  }, [roomId, dispatch]);
+
+  useEffect(() => {
     const allConversationIds = conversations.map((c) => c.id);
 
     let errorToastId: undefined | string;
@@ -296,7 +355,6 @@ const Home = ({
           event: '*',
         },
         (payload) => {
-          console.log('message change');
           if (!allConversationIds.includes(payload.new.conversationId)) {
             return;
           }
@@ -366,7 +424,6 @@ const Home = ({
           filter: `roomId=eq.${roomId}`,
         },
         (payload) => {
-          console.log('conversation change');
           if (payload.eventType === 'INSERT') {
             const newConversation = { ...payload.new, messages: [] };
             const updatedConversations = [...conversations, newConversation];
@@ -526,12 +583,11 @@ const Home = ({
         id: uuidv4(),
         name: t('New Conversation'),
         messages: [],
-        model: OpenAIModels[defaultModelId],
+        // model: OpenAIModel s[defaultModelId],
         prompt: DEFAULT_SYSTEM_PROMPT,
         temperature: DEFAULT_TEMPERATURE,
-        folderId: null,
+        // folderId: null,
       };
-
       dispatch({
         field: 'selectedConversation',
         value: lastConversation,
@@ -554,6 +610,7 @@ const Home = ({
         handleUpdateFolder,
         handleSelectConversation,
         handleUpdateConversation,
+        presenceChannelRef,
       }}
     >
       <Head>
@@ -604,6 +661,21 @@ export const getServerSideProps: GetServerSideProps = async ({
       .single();
 
     // @Incomplete - error
+    if (error) {
+      console.error(error);
+      return {
+        notFound: true,
+      };
+    }
+
+    const { data: conversationData, error: conversationError } = await supabase
+      .from('conversation')
+      .insert({
+        roomId: room.id,
+        name: 'New Conversation',
+        prompt: DEFAULT_SYSTEM_PROMPT,
+        temperature: DEFAULT_TEMPERATURE,
+      });
     if (error) {
       console.error(error);
       return {

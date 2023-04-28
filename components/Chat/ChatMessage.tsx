@@ -135,17 +135,22 @@ export const ChatMessage: FC<Props> = memo(
       <div
         className={`group md:px-4 ${
           message.role === 'assistant'
-            ? 'border-b border-black/10 bg-white bg-opacity-20 text-gray-800 dark:border-gray-900/50 dark:bg-[#444654] dark:text-gray-100'
-            : 'border-b border-black/10 text-gray-800 dark:border-gray-900/50 dark:bg-[#343541] dark:text-gray-100'
+            ? 'border-b border-black/10 bg-white bg-opacity-20 text-gray-800'
+            : 'border-b border-black/10 text-gray-800'
         }`}
         style={{ overflowWrap: 'anywhere' }}
       >
         <div className="relative m-auto flex p-4 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl">
-          <div className="min-w-[20px] text-right font-bold">
+          <div className="min-w-[40px] text-right font-bold mr-2">
             {message.role === 'assistant' ? (
-              <IconRobot size={20} />
+              <IconRobot size={30} />
             ) : (
-              <IconUser size={20} />
+              <div className="">
+                <IconUser size={30} />
+                {message.author && message.author !== ''
+                  ? message.author
+                  : 'Anonymous'}
+              </div>
             )}
           </div>
 
@@ -192,7 +197,7 @@ export const ChatMessage: FC<Props> = memo(
                     </div>
                   </div>
                 ) : (
-                  <div className="prose whitespace-pre-wrap dark:prose-invert text-sm flex-1">
+                  <div className="prose whitespace-pre-wrap dark:prose-invert flex-1">
                     {message.content}
                   </div>
                 )}

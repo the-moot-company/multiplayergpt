@@ -45,20 +45,19 @@ export const ChatFolders = ({ searchTerm }: Props) => {
     );
   };
 
-  return (
-    <div className="flex w-full flex-col pt-2">
-      {/* {folders
-        .filter((folder) => folder.type === 'chat')
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((folder, index) => (
-          <Folder
-            key={index}
-            searchTerm={searchTerm}
-            currentFolder={folder}
-            handleDrop={handleDrop}
-            folderComponent={ChatFolders(folder)}
-          />
-        ))} */}
-    </div>
-  );
+  return null;
+  // <div className="flex w-full flex-col pt-2">
+  //   {folders
+  //     .filter((folder) => folder.type === 'chat')
+  //     .sort((a, b) => a.name.localeCompare(b.name))
+  //     .map((folder, index) => (
+  //       <Folder
+  //         key={index}
+  //         searchTerm={searchTerm}
+  //         currentFolder={folder}
+  //         handleDrop={handleDrop}
+  //         folderComponent={ChatFolders(folder)}
+  //       />
+  //     ))}
+  // </div>
 };

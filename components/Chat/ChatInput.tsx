@@ -16,6 +16,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -52,12 +53,20 @@ export const ChatInput = ({
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, prompts, loading, messageIsStreaming },
+    state: {
+      selectedConversation,
+      prompts,
+      loading,
+      messageIsStreaming,
+      userPresences,
+      userTyping,
+    },
+    presenceChannelRef,
 
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>('');
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [showPromptList, setShowPromptList] = useState(false);
   const [activePromptIndex, setActivePromptIndex] = useState(0);
@@ -228,6 +237,26 @@ export const ChatInput = ({
   };
 
   useEffect(() => {
+    if (!presenceChannelRef.current) {
+      return;
+    }
+
+    const name = localStorage.getItem('name');
+
+    // presenceChannelRef.current.track({
+    //   selectedConversationId: selectedConversation?.id,
+    //   name: name && name !== '' ? name : 'Anonymous',
+    //   colour: 'red',
+    //   userInput: content,
+    // });
+    presenceChannelRef.current.send({
+      type: 'broadcast',
+      event: 'typing',
+      payload: { name: name && name !== '' ? name : 'Anonymous', content },
+    });
+  }, [content, presenceChannelRef, selectedConversation]);
+
+  useEffect(() => {
     if (promptListRef.current) {
       promptListRef.current.scrollTop = activePromptIndex * 30;
     }
@@ -260,8 +289,21 @@ export const ChatInput = ({
     };
   }, []);
 
+  let typingMessage = useMemo(() => {
+    let message = '';
+
+    if (userTyping && userTyping.content !== '') {
+      message = `${userTyping.name} is typing...`;
+    }
+
+    return { message, content: userTyping ? userTyping.content : null };
+  }, [userTyping]);
+
+  //
+
   return (
     <div className="absolute bottom-0 left-0 w-full border-transparent bg-gradient-to-b from-transparent via-white to-white pt-6 md:pt-2">
+      <div className="align-right">{typingMessage.message}</div>
       <div className="stretch mx-2 mt-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl">
         {messageIsStreaming && (
           <button
@@ -283,14 +325,14 @@ export const ChatInput = ({
             </button>
           )} */}
 
-        <div className="relative mx-2 flex w-full flex-grow flex-col rounded-lg border border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-0 min-h-10 md:pt-0 mb-2">
+        <div className="relative mx-2 flex w-full flex-grow flex-col rounded-lg border border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-0 min-h-10 md:pt-0">
           {/* <button
             className="absolute left-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900"
             onClick={() => setShowPluginSelect(!showPluginSelect)}
             onKeyDown={(e) => {}}
           >
             {plugin ? <IconBrandGoogle size={20} /> : <IconBolt size={20} />}
-          </button>
+          </button> */}
 
           {showPluginSelect && (
             <div className="absolute left-0 bottom-14 rounded bg-base-100">
@@ -313,7 +355,7 @@ export const ChatInput = ({
                 }}
               />
             </div>
-          )} */}
+          )}
 
           <textarea
             ref={textareaRef}
@@ -329,7 +371,8 @@ export const ChatInput = ({
               }`,
             }}
             placeholder={t('Type a message...') || ''}
-            value={content}
+            value={typingMessage.content ? typingMessage.content : content}
+            disabled={typingMessage.content}
             rows={1}
             onCompositionStart={() => setIsTyping(true)}
             onCompositionEnd={() => setIsTyping(false)}
@@ -381,9 +424,9 @@ export const ChatInput = ({
           )}
         </div>
       </div>
-      {/* <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
+      <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-4">
         <a
-          href="https://github.com/mckaywrigley/chatbot-ui"
+          href="https://moot.app/"
           target="_blank"
           rel="noreferrer"
           className="underline"
@@ -392,9 +435,9 @@ export const ChatInput = ({
         </a>
         .{' '}
         {t(
-          "MultiplayerGPT is an multiplayer chatbot for OpenAI's chat models aiming to mimic ChatGPT's interface and functionality.",
+          'MultiplayerGPT is a multiplayer GPT chatbot built independently from ChatGPT or OpenAI. Built on top of Chatbot UI.',
         )}
-      </div> */}
+      </div>
     </div>
   );
 };
