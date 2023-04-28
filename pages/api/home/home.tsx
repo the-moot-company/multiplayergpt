@@ -315,10 +315,12 @@ const Home = ({
       })
       .subscribe();
 
+    const name = localStorage.getItem('name');
+
     presenceChannel.track({
       selectedConversationId: selectedConversation?.id,
-      name: uuidv4(),
-      colour: localStorage.getItem('name') ?? 'Anonymous',
+      name: name && name !== '' ? name : 'Anonymous',
+      colour: 'red',
     });
   }, [roomId, selectedConversation?.id]);
 

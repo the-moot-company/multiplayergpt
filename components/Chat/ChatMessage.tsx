@@ -147,7 +147,9 @@ export const ChatMessage: FC<Props> = memo(
             ) : (
               <div className="">
                 <IconUser size={30} />
-                {message.author}
+                {message.author && message.author !== ''
+                  ? message.author
+                  : 'Anonymous'}
               </div>
             )}
           </div>
