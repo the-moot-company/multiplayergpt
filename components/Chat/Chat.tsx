@@ -256,9 +256,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           saveConversations(updatedConversations);
           homeDispatch({ field: 'messageIsStreaming', value: false });
 
-          // @Incomplete - herte
-
-          // @Incomplete - what happens if the user closes the tab while text is still streaming
           const newMessage = { role: 'assistant', content: text };
           homeDispatch({ field: 'loading', value: false });
 

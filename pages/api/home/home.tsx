@@ -117,11 +117,6 @@ const Home = ({
   }, [data, dispatch]);
 
   useEffect(() => {
-    // const bob = async () => {
-    //   const rooms = await supabase.from('room').select('*');
-
-    // };
-    // bob();
     dispatch({ field: 'modelError', value: getModelsError(error) });
   }, [dispatch, error, getModelsError]);
 
