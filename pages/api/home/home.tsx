@@ -567,7 +567,7 @@ const Home = ({
       </Head>
       {selectedConversation && (
         <main
-          className={`flex h-screen w-screen flex-col text-sm text-white dark:text-white ${lightMode}`}
+          className={`flex h-screen w-screen flex-col text-sm text-white ${lightMode}`}
         >
           <div className="fixed top-0 w-full sm:hidden">
             <Navbar
@@ -582,8 +582,6 @@ const Home = ({
             <div className="flex flex-1">
               <Chat stopConversationRef={stopConversationRef} />
             </div>
-
-            {/* <Promptbar /> */}
           </div>
         </main>
       )}

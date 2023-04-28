@@ -31,7 +31,7 @@ export const ModelSelect = () => {
       <label className="mb-2 text-left text-neutral-700 dark:text-neutral-400">
         {t('Model')}
       </label>
-      <div className="w-full rounded-lg border border-neutral-200 bg-transparent pr-2 text-neutral-900 dark:border-neutral-600 dark:text-white">
+      <div className="w-full rounded-lg border border-neutral-200 bg-base-300 pr-2 text-neutral-900 dark:border-neutral-600 dark:text-white">
         <select
           className="w-full bg-transparent p-2"
           placeholder={t('Select a model') || ''}
@@ -51,7 +51,7 @@ export const ModelSelect = () => {
           ))}
         </select>
       </div>
-      <div className="w-full mt-3 text-left text-neutral-700 dark:text-neutral-400 flex items-center">
+      {/* <div className="w-full mt-3 text-left text-neutral-700 dark:text-neutral-400 flex items-center">
         <a
           href="https://platform.openai.com/account/usage"
           target="_blank"
@@ -60,7 +60,7 @@ export const ModelSelect = () => {
           <IconExternalLink size={18} className={'inline mr-1'} />
           {t('View Account Usage')}
         </a>
-      </div>
+      </div> */}
     </div>
   );
 };
