@@ -33,6 +33,58 @@ interface Props<T> {
   handleCreateFolder: () => void;
   handleDrop: (e: any) => void;
 }
+// Array of Animals
+const animals = [
+  'Giraffe',
+  'Koala',
+  'Cheetah',
+  'Penguin',
+  'Dolphin',
+  'Sloth',
+  'Elephant',
+  'Tiger',
+  'Octopus',
+  'Kangaroo',
+  'Lion',
+  'Gorilla',
+  'Polar bear',
+  'Flamingo',
+  'Ostrich',
+  'Chimpanzee',
+  'Zebra',
+  'Orangutan',
+  'Hippopotamus',
+  'Peacock',
+];
+
+// Array of Adjectives
+const adjectives = [
+  'Majestic',
+  'Playful',
+  'Graceful',
+  'Fierce',
+  'Curious',
+  'Adorable',
+  'Energetic',
+  'Enchanting',
+  'Wise',
+  'Agile',
+  'Colorful',
+  'Lively',
+  'Powerful',
+  'Gentle',
+  'Mysterious',
+  'Elegant',
+  'Quirky',
+  'Regal',
+  'Silly',
+  'Vibrant',
+];
+
+const randomAnimal =
+  adjectives[Math.floor(Math.random() * animals.length)] +
+  animals[Math.floor(Math.random() * animals.length)] +
+  Math.floor(Math.random() * 50);
 
 const Sidebar = <T,>({
   isOpen,
@@ -49,7 +101,7 @@ const Sidebar = <T,>({
   handleCreateFolder,
   handleDrop,
 }: Props<T>) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(randomAnimal);
   const { t } = useTranslation('promptbar');
 
   const allowDrop = (e: any) => {
