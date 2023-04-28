@@ -303,8 +303,7 @@ export const ChatInput = ({
 
   return (
     <div className="absolute bottom-0 left-0 w-full border-transparent bg-gradient-to-b from-transparent via-white to-white pt-6 md:pt-2">
-      <div className="align-right">{typingMessage.message}</div>
-      <div className="stretch mx-2 mt-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl">
+      <div className="stretch mx-2 mt-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl flex flex-col">
         {messageIsStreaming && (
           <button
             className="absolute top-0 left-0 right-0 mx-auto mb-3 flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black hover:opacity-50 md:mb-0 md:mt-2"
@@ -313,7 +312,9 @@ export const ChatInput = ({
             <IconPlayerStop size={16} /> {t('Stop Generating')}
           </button>
         )}
-
+        <div className="align-right text-black text-xs opacity-60">
+          {typingMessage.message}
+        </div>
         {/* {!messageIsStreaming &&
           selectedConversation &&
           selectedConversation.messages.length > 0 && (
