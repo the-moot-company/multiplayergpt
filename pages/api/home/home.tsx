@@ -317,10 +317,21 @@ const Home = ({
         const currentUsers = Object.values(presenceChannel.presenceState()).map(
           (entry) => entry[0],
         );
-
         dispatch({
           field: 'userPresences',
           value: currentUsers == null ? [] : currentUsers,
+        });
+      })
+      .on('broadcast', { event: 'typing' }, (payload) => {
+        if (payload.payload.content === '') {
+          dispatch({
+            field: 'userTyping',
+            value: null,
+          });
+        }
+        dispatch({
+          field: 'userTyping',
+          value: payload.payload,
         });
       })
       .subscribe();

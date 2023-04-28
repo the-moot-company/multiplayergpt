@@ -55,6 +55,7 @@ export const ChatInput = ({
       loading,
       messageIsStreaming,
       userPresences,
+      userTyping,
     },
     presenceChannelRef,
 
@@ -238,11 +239,16 @@ export const ChatInput = ({
 
     const name = localStorage.getItem('name');
 
-    presenceChannelRef.current.track({
-      selectedConversationId: selectedConversation?.id,
-      name: name && name !== '' ? name : 'Anonymous',
-      colour: 'red',
-      userInput: content,
+    // presenceChannelRef.current.track({
+    //   selectedConversationId: selectedConversation?.id,
+    //   name: name && name !== '' ? name : 'Anonymous',
+    //   colour: 'red',
+    //   userInput: content,
+    // });
+    presenceChannelRef.current.send({
+      type: 'broadcast',
+      event: 'typing',
+      payload: { name: name && name !== '' ? name : 'Anonymous', content },
     });
   }, [content, presenceChannelRef, selectedConversation]);
 
@@ -280,28 +286,20 @@ export const ChatInput = ({
   }, []);
 
   let typingMessage = useMemo(() => {
-    let mesasage = '';
-    const otherTypingUsers = userPresences.filter((userPresence) => {
-      return (
-        userPresence.userInput &&
-        userPresence.userInput !== '' &&
-        userPresence.selectedConversationId === selectedConversation?.id &&
-        userPresence.name !== localStorage.getItem('name')
-      );
-    });
+    let message = '';
 
-    if (otherTypingUsers.length === 1) {
-      mesasage = `${otherTypingUsers[0].name} is typing...`;
-    } else if (otherTypingUsers.length > 1) {
-      mesasage = 'Several people are typing...';
+    if (userTyping && userTyping.content !== '') {
+      message = `${userTyping.name} is typing...`;
     }
 
-    return mesasage;
-  }, [selectedConversation?.id, userPresences]);
+    return { message, content: userTyping ? userTyping.content : null };
+  }, [userTyping]);
+
+  //
 
   return (
     <div className="absolute bottom-0 left-0 w-full border-transparent bg-gradient-to-b from-transparent via-white to-white pt-6 dark:border-white/20 dark:via-[#343541] dark:to-[#343541] md:pt-2">
-      <div className="align-right">{typingMessage}</div>
+      <div className="align-right">{typingMessage.message}</div>
       <div className="stretch mx-2 mt-4 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl">
         {messageIsStreaming && (
           <button
@@ -357,7 +355,7 @@ export const ChatInput = ({
 
           <textarea
             ref={textareaRef}
-            className="m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-2 text-black dark:bg-transparent dark:text-white md:py-3 md:pl-10"
+            className="m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-2 text-black dark:bg-transparent dark:text-white md:py-3 md:pl-10 disabled:cursor-not-allowed disabled:border-red-400 disabled:border-2  "
             style={{
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
@@ -369,7 +367,8 @@ export const ChatInput = ({
               }`,
             }}
             placeholder={t('Type a message...') || ''}
-            value={content}
+            value={typingMessage.content ? typingMessage.content : content}
+            disabled={typingMessage.content}
             rows={1}
             onCompositionStart={() => setIsTyping(true)}
             onCompositionEnd={() => setIsTyping(false)}
