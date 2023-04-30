@@ -91,10 +91,11 @@ const Home = ({
       selectedConversation,
       prompts,
       temperature,
+      name,
+      userColor,
     },
     dispatch,
   } = contextValue;
-
   const stopConversationRef = useRef<boolean>(false);
 
   const { data, error, refetch } = useQuery(
@@ -339,6 +340,29 @@ const Home = ({
     // presenceChannel tracking happens in ChatInput.tsx
     presenceChannelRef.current = presenceChannel;
   }, [roomId, dispatch]);
+
+  useEffect(() => {
+    if (!presenceChannelRef.current) return;
+
+    const storedNameValue = localStorage.getItem('name');
+
+    let newName = name;
+    if (storedNameValue) {
+      newName = storedNameValue;
+    }
+    const storedColorValue = localStorage.getItem('color');
+
+    let newColor = userColor;
+    if (storedColorValue) {
+      newColor = storedColorValue;
+    }
+
+    presenceChannelRef.current.track({
+      selectedConversationId: selectedConversation?.id,
+      name: newName && newName !== '' ? newName : 'Anonymous',
+      color: newColor,
+    });
+  }, [selectedConversation, name, userColor]);
 
   useEffect(() => {
     const allConversationIds = conversations.map((c) => c.id);

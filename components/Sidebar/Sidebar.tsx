@@ -4,11 +4,13 @@ import {
   IconMistOff,
   IconPlus,
 } from '@tabler/icons-react';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Image from 'next/image';
 import Link from 'next/link';
+
+import HomeContext from '@/pages/api/home/home.context';
 
 import {
   CloseSidebarButton,
@@ -33,58 +35,6 @@ interface Props<T> {
   handleCreateFolder: () => void;
   handleDrop: (e: any) => void;
 }
-// Array of Animals
-const animals = [
-  'Giraffe',
-  'Koala',
-  'Cheetah',
-  'Penguin',
-  'Dolphin',
-  'Sloth',
-  'Elephant',
-  'Tiger',
-  'Octopus',
-  'Kangaroo',
-  'Lion',
-  'Gorilla',
-  'Polar bear',
-  'Flamingo',
-  'Ostrich',
-  'Chimpanzee',
-  'Zebra',
-  'Orangutan',
-  'Hippopotamus',
-  'Peacock',
-];
-
-// Array of Adjectives
-const adjectives = [
-  'Majestic',
-  'Playful',
-  'Graceful',
-  'Fierce',
-  'Curious',
-  'Adorable',
-  'Energetic',
-  'Enchanting',
-  'Wise',
-  'Agile',
-  'Colorful',
-  'Lively',
-  'Powerful',
-  'Gentle',
-  'Mysterious',
-  'Elegant',
-  'Quirky',
-  'Regal',
-  'Silly',
-  'Vibrant',
-];
-
-const randomAnimal =
-  adjectives[Math.floor(Math.random() * animals.length)] +
-  animals[Math.floor(Math.random() * animals.length)] +
-  Math.floor(Math.random() * 50);
 
 const Sidebar = <T,>({
   isOpen,
@@ -101,7 +51,24 @@ const Sidebar = <T,>({
   handleCreateFolder,
   handleDrop,
 }: Props<T>) => {
-  const [inputValue, setInputValue] = useState(randomAnimal);
+  const {
+    state: {
+      selectedConversation,
+      prompts,
+      loading,
+      messageIsStreaming,
+      userPresences,
+      userTyping,
+      name,
+      userColor,
+    },
+    presenceChannelRef,
+
+    dispatch: homeDispatch,
+  } = useContext(HomeContext);
+
+  const [inputValue, setInputValue] = useState(name);
+
   const { t } = useTranslation('promptbar');
 
   const allowDrop = (e: any) => {
@@ -119,7 +86,30 @@ const Sidebar = <T,>({
   useEffect(() => {
     const storedValue = localStorage.getItem('name');
     if (storedValue) {
+      console.log('storedValue', storedValue);
       setInputValue(storedValue);
+    } else {
+      presenceChannelRef.current.track({
+        selectedConversationId: selectedConversation?.id,
+        name: inputValue && inputValue !== '' ? inputValue : 'Anonymous',
+        color: userColor,
+      });
+      homeDispatch({
+        field: 'name',
+        value: inputValue,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedValue = localStorage.getItem('color');
+    if (storedValue) {
+      homeDispatch({
+        field: 'userColor',
+        value: storedValue,
+      });
+    } else {
+      localStorage.setItem('color', userColor);
     }
   }, []);
 
@@ -127,6 +117,10 @@ const Sidebar = <T,>({
     const value = event.target.value;
     setInputValue(value);
     localStorage.setItem('name', value);
+    homeDispatch({
+      field: 'name',
+      value,
+    });
   };
 
   return isOpen ? (

@@ -243,12 +243,6 @@ export const ChatInput = ({
 
     const name = localStorage.getItem('name');
 
-    // presenceChannelRef.current.track({
-    //   selectedConversationId: selectedConversation?.id,
-    //   name: name && name !== '' ? name : 'Anonymous',
-    //   colour: 'red',
-    //   userInput: content,
-    // });
     presenceChannelRef.current.send({
       type: 'broadcast',
       event: 'typing',

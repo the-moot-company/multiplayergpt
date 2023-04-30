@@ -47,6 +47,17 @@ interface Props {
   stopConversationRef: MutableRefObject<boolean>;
 }
 
+const getInitials = (name: string) => {
+  if (!name || typeof name !== 'string') return '';
+
+  const initials = name
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase())
+    .join('');
+
+  return initials;
+};
+
 export const Chat = memo(({ stopConversationRef }: Props) => {
   const { t } = useTranslation('chat');
 
@@ -62,6 +73,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
       modelError,
       loading,
       prompts,
+      userPresences,
     },
     handleUpdateConversation,
     dispatch,
@@ -226,7 +238,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                 value: updatedConversation,
               });
               const newMessage = { role: 'assistant', content: text };
-              const { data: message, error } = await supabase
+              const { data: newSupabaseMessage, error } = await supabase
                 .from('message')
                 .upsert([
                   {
@@ -243,7 +255,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
               if (error) {
                 console.error(error);
               }
-              messageId = message.id;
+              messageId = newSupabaseMessage?.id;
             } else {
               const updatedMessages: Message[] =
                 updatedConversation.messages.map((message, index) => {
@@ -347,7 +359,10 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           if (updatedConversations.length === 0) {
             updatedConversations.push(updatedConversation);
           }
-          homeDispatch({ field: 'conversations', value: updatedConversations });
+          homeDispatch({
+            field: 'conversations',
+            value: updatedConversations,
+          });
           saveConversations(updatedConversations);
           homeDispatch({ field: 'loading', value: false });
           homeDispatch({ field: 'messageIsStreaming', value: false });
@@ -464,19 +479,36 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
 
   return (
     <div className="relative flex-1 overflow-hidden bg-pixel-noise">
-      <div className="flex flex-row hidden md:flex md:absolute top-0 right-0 items-center">
-        <div className="rounded-full h-6 w-6 flex items-center justify-center text-black text-xs mr-2">
-          + X
-        </div>
-        <div className="bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2">
-          u
-        </div>
-        <div className="bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2">
-          u
-        </div>
-        <div className="bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100">
-          u
-        </div>
+      <div className="flex flex-row hidden md:flex md:absolute top-0 right-0 items-center z-10">
+        {userPresences.slice(0, 3).map((userPresence) => (
+          <div
+            key={userPresence.id}
+            className="group relative  bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2"
+            style={{
+              backgroundColor: userPresence.color,
+            }}
+          >
+            {getInitials(userPresence.name)}
+            <div
+              className="absolute hidden top-0 bg-gray-200 text-gray-800 px-2 py-1 rounded mt-2 text-sm group-hover:block z-[11] text-white"
+              style={{
+                backgroundColor: userPresence.color,
+              }}
+            >
+              {userPresence.name}
+            </div>
+          </div>
+        ))}
+        {userPresences.length > 3 && (
+          <div className="group relative bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2 z-[11]">
+            +{userPresences.length - 3}
+            <div className="absolute hidden top-0 bg-moot-primary text-gray-800 px-2 py-1 rounded mt-2 text-sm group-hover:block z-[11] text-white">
+              {userPresences.slice(3).map((userPresence) => (
+                <p key={userPresence.id}>{userPresence.name}</p>
+              ))}
+            </div>
+          </div>
+        )}
         <CopyToClipboard
           text={navigator.clipboard.writeText(window.location.href)}
         >
