@@ -158,7 +158,13 @@ export const ChatMessage: FC<Props> = memo(
                 />
               </div>
             ) : (
-              <div className="flex text-xs items-center text-black font-medium aspect-1 justify-center h-[26px] w-[26px] bg-moot-primary bg-opacity-20 rounded-full ring-2 ring-moot-primary">
+              <div
+                className="flex text-xs items-center text-black font-medium aspect-1 justify-center h-[26px] w-[26px] bg-opacity-20 rounded-full ring-2 ring-moot-primary"
+                style={{
+                  backgroundColor: message.authorColor + '33' || '#FF725833',
+                  r,
+                }}
+              >
                 {/* <IconUser size={12} /> */}
                 <p className="">{getInitials(message.author)}</p>
               </div>

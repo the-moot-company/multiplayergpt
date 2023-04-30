@@ -125,6 +125,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         const { error } = await supabase.from('message').insert([
           {
             author: localStorage.getItem('name') ?? 'Anonymous',
+            authorColor: localStorage.getItem('color') ?? '#FF7258',
             conversationId: selectedConversation.id,
             role: message.role,
             content: message.content,
