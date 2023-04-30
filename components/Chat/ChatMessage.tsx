@@ -1,14 +1,8 @@
-import {
-  IconCheck,
-  IconCopy,
-  IconEdit,
-  IconRobot,
-  IconTrash,
-  IconUser,
-} from '@tabler/icons-react';
+import { IconCheck, IconCopy, IconUser } from '@tabler/icons-react';
 import { FC, memo, useContext, useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
 
 import { updateConversation } from '@/utils/app/conversation';
 
@@ -131,25 +125,42 @@ export const ChatMessage: FC<Props> = memo(
       }
     }, [isEditing]);
 
+    const getInitials = (name: string) => {
+      if (!name || typeof name !== 'string') return '';
+
+      const initials = name
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase())
+        .join('');
+
+      return initials;
+    };
+
     return (
       <div
         className={`group md:px-4 ${
           message.role === 'assistant'
             ? 'border-b border-black/10 bg-white bg-opacity-20 text-gray-800'
-            : 'border-b border-black/10 text-gray-800'
+            : 'border-b border-black/10 text-gray-800 pb-4'
         }`}
         style={{ overflowWrap: 'anywhere' }}
       >
-        <div className="relative m-auto flex p-4 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl">
-          <div className="min-w-[40px] text-right font-bold mr-2">
+        <div className="relative m-auto flex p-4 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-2xl">
+          <div className="min-w-[16px] text-right mr-4 md:mr-0">
             {message.role === 'assistant' ? (
-              <IconRobot size={30} />
+              <div className="flex items-center justify-center p-2 bg-moot-primary rounded">
+                <Image
+                  src="/images/logo-svg.svg"
+                  alt="Logo"
+                  className="invert"
+                  width={12}
+                  height={12}
+                />
+              </div>
             ) : (
-              <div className="">
-                <IconUser size={30} />
-                {message.author && message.author !== ''
-                  ? message.author
-                  : 'Anonymous'}
+              <div className="flex text-xs items-center text-black font-medium aspect-1 justify-center h-[26px] w-[26px] bg-moot-primary bg-opacity-20 rounded-full ring-2 ring-moot-primary">
+                {/* <IconUser size={12} /> */}
+                <p className="">{getInitials(message.author)}</p>
               </div>
             )}
           </div>
@@ -197,8 +208,15 @@ export const ChatMessage: FC<Props> = memo(
                     </div>
                   </div>
                 ) : (
-                  <div className="prose whitespace-pre-wrap dark:prose-invert flex-1">
-                    {message.content}
+                  <div className="flex flex-col w-full items-start">
+                    <p className="text-xs font-medium uppercase h-2 absolute top-1 opacity-60">
+                      {message.author && message.author !== ''
+                        ? message.author
+                        : 'Anonymous'}
+                    </p>
+                    <div className="prose whitespace-pre-wrap flex-1 top-4 relative">
+                      {message.content}
+                    </div>
                   </div>
                 )}
 

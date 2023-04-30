@@ -7,11 +7,13 @@ import {
   useRef,
   useState,
 } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import toast from 'react-hot-toast';
 import {
   HiOutlineBookOpen,
   HiOutlineLightBulb,
   HiOutlineUser,
+  HiOutlineUserAdd,
 } from 'react-icons/hi';
 
 import { useTranslation } from 'next-i18next';
@@ -411,8 +413,35 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     };
   }, [messagesEndRef]);
 
+  function handleCopyToClipboard() {
+    toast.success('Invite link copied to clipboard.', {
+      duration: 1500, // Set duration to 4 seconds (4000 milliseconds)
+    });
+  }
+
   return (
     <div className="relative flex-1 overflow-hidden bg-pixel-noise">
+      <div className="flex flex-row hidden md:flex md:absolute top-0 right-0 items-center">
+        <div className="rounded-full h-6 w-6 flex items-center justify-center text-black text-xs mr-2">
+          + X
+        </div>
+        <div className="bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2">
+          u
+        </div>
+        <div className="bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2">
+          u
+        </div>
+        <div className="bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100">
+          u
+        </div>
+        <CopyToClipboard
+          text={navigator.clipboard.writeText(window.location.href)}
+        >
+          <button onClick={handleCopyToClipboard} className="p-2 text-black">
+            <HiOutlineUserAdd size={24} />
+          </button>
+        </CopyToClipboard>
+      </div>
       {!(apiKey || serverSideApiKeyIsSet) ? (
         <div className="mx-auto flex h-full w-[300px] flex-col justify-center space-y-6 sm:w-[600px]">
           <div className="text-center text-4xl font-medium text-black mb-2">

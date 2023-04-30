@@ -303,7 +303,7 @@ export const ChatInput = ({
 
   return (
     <div className="absolute bottom-0 left-0 w-full border-transparent bg-gradient-to-b from-transparent via-white to-white pt-6 md:pt-2">
-      <div className="stretch mx-2 mt-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl flex flex-col">
+      <div className="stretch mx-2 mt-2 flex flex-row gap-0 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl">
         {messageIsStreaming && (
           <button
             className="absolute top-0 left-0 right-0 mx-auto mb-3 flex w-fit items-center gap-3 rounded border border-neutral-200 bg-white py-2 px-4 text-black hover:opacity-50 md:mb-0 md:mt-2"
@@ -360,7 +360,7 @@ export const ChatInput = ({
 
           <textarea
             ref={textareaRef}
-            className="m-0 w-full resize-none border-0 bg-transparent rounded-lg p-0 py-2 pr-8 pl-4 text-black md:py-3"
+            className="m-0 w-full resize-none border-0 bg-transparent rounded-lg p-0 py-2 pr-8 pl-4 text-black md:py-3 focus:ring-2 focus:ring-offset-4 focus:ring-moot-primary focus:outline-base-300"
             style={{
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
@@ -393,9 +393,9 @@ export const ChatInput = ({
           </button>
 
           {showScrollDownButton && (
-            <div className="absolute bottom-12 right-0 lg:bottom-0 lg:-right-10">
+            <div className="absolute bottom-14 right-2 lg:bottom-14">
               <button
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-300 text-gray-800 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-neutral-200"
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-base-100 border border-base-300 text-gray-800 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-moot-primary focus:ring-offset-2"
                 onClick={onScrollDownClick}
               >
                 <IconArrowDown size={18} />
@@ -436,7 +436,7 @@ export const ChatInput = ({
         </a>
         .{' '}
         {t(
-          'MultiplayerGPT is a multiplayer GPT chatbot built independently from ChatGPT or OpenAI. Built on top of Chatbot UI.',
+          'MultiplayerGPT is a multiplayer GPT chatbot built by Moot, independently from ChatGPT or OpenAI.',
         )}
       </div>
     </div>
