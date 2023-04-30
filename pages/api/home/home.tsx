@@ -385,6 +385,44 @@ const Home = ({
               });
             }
           }
+
+          if (payload.eventType === 'UPDATE') {
+            dispatch({
+              field: 'loading',
+              value: payload.new.loading,
+            });
+            const updatedMessage = payload.new;
+
+            const updatedConversations = conversations.map((c) => {
+              if (c.id === updatedMessage.conversationId) {
+                return {
+                  ...c,
+                  messages: c.messages.map((m) => {
+                    if (m.id === updatedMessage.id) {
+                      return updatedMessage;
+                    }
+
+                    return m;
+                  }),
+                };
+              }
+
+              return c;
+            });
+
+            dispatch({ field: 'conversations', value: updatedConversations });
+
+            if (updatedMessage.conversationId === selectedConversation?.id) {
+              const newSelectedConversation = updatedConversations.find(
+                (c) => c.id === selectedConversation.id,
+              );
+
+              dispatch({
+                field: 'selectedConversation',
+                value: newSelectedConversation,
+              });
+            }
+          }
         },
       )
       .subscribe((status) => {
@@ -723,7 +761,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const { data: rawConversations } = await supabase
     .from('conversation')
     .select('*, message(*)')
-    .order('createdAt', { ascending: true })
+    .order('createdAt', { foreignTable: 'message', ascending: true })
     .eq('roomId', roomId);
 
   const conversations = rawConversations?.map((conversation) => {

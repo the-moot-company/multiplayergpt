@@ -200,6 +200,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           let done = false;
           let isFirst = true;
           let text = '';
+          let messageId = '';
           while (!done) {
             if (stopConversationRef.current === true) {
               controller.abort();
@@ -220,10 +221,29 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                 ...updatedConversation,
                 messages: updatedMessages,
               };
-              // homeDispatch({
-              //   field: 'selectedConversation',
-              //   value: updatedConversation,
-              // });
+              homeDispatch({
+                field: 'selectedConversation',
+                value: updatedConversation,
+              });
+              const newMessage = { role: 'assistant', content: text };
+              const { data: message, error } = await supabase
+                .from('message')
+                .upsert([
+                  {
+                    conversationId: selectedConversation.id,
+                    role: newMessage.role,
+                    content: newMessage.content,
+                    author: localStorage.getItem('name') ?? 'Anonymous',
+                  },
+                ])
+                .select('id')
+                .single();
+
+              // @Incomplete - error handling
+              if (error) {
+                console.error(error);
+              }
+              messageId = message.id;
             } else {
               const updatedMessages: Message[] =
                 updatedConversation.messages.map((message, index) => {
@@ -240,10 +260,30 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                 messages: updatedMessages,
               };
 
-              // homeDispatch({
-              //   field: 'selectedConversation',
-              //   value: updatedConversation,
-              // });
+              homeDispatch({
+                field: 'selectedConversation',
+                value: updatedConversation,
+              });
+              const newMessage = {
+                role: 'assistant',
+                content: text,
+              };
+              const { data: message, error } = await supabase
+                .from('message')
+                .upsert([
+                  {
+                    id: messageId,
+                    conversationId: selectedConversation.id,
+                    role: newMessage.role,
+                    content: newMessage.content,
+                    author: localStorage.getItem('name') ?? 'Anonymous',
+                  },
+                ]);
+
+              // @Incomplete - error handling
+              if (error) {
+                console.error(error);
+              }
             }
           }
           saveConversation(updatedConversation);
@@ -265,14 +305,17 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           const newMessage = { role: 'assistant', content: text };
           homeDispatch({ field: 'loading', value: false });
 
-          const { error } = await supabase.from('message').insert([
-            {
-              conversationId: selectedConversation.id,
-              role: newMessage.role,
-              content: newMessage.content,
-              author: localStorage.getItem('name') ?? 'Anonymous',
-            },
-          ]);
+          const { data: message, error } = await supabase
+            .from('message')
+            .upsert([
+              {
+                id: messageId,
+                conversationId: selectedConversation.id,
+                role: newMessage.role,
+                content: newMessage.content,
+                author: localStorage.getItem('name') ?? 'Anonymous',
+              },
+            ]);
 
           // @Incomplete - error handling
           if (error) {
@@ -585,7 +628,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                   />
                 ))}
 
-                {loading && <ChatLoader />}
+                {/* {loading && <ChatLoader />} */}
 
                 <div className="h-[162px]" ref={messagesEndRef} />
               </>
