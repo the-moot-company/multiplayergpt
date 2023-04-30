@@ -162,6 +162,7 @@ export const ChatMessage: FC<Props> = memo(
                 className="flex text-xs items-center text-black font-medium aspect-1 justify-center h-[26px] w-[26px] bg-opacity-20 rounded-full ring-2 ring-moot-primary"
                 style={{
                   backgroundColor: message.authorColor + '33' || '#FF725833',
+                  '--tw-ring-color': message.authorColor || '#FF7258',
                 }}
               >
                 {/* <IconUser size={12} /> */}
