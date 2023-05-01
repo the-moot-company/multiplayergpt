@@ -45,7 +45,7 @@ const animals = [
   'Kangaroo',
   'Lion',
   'Gorilla',
-  'Polar bear',
+  'PolarBear',
   'Flamingo',
   'Ostrich',
   'Chimpanzee',

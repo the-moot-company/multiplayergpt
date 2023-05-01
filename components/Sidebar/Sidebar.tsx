@@ -89,14 +89,15 @@ const Sidebar = <T,>({
       console.log('storedValue', storedValue);
       setInputValue(storedValue);
     } else {
+      localStorage.setItem('name', name);
       presenceChannelRef.current.track({
         selectedConversationId: selectedConversation?.id,
-        name: inputValue && inputValue !== '' ? inputValue : 'Anonymous',
+        name: name,
         color: userColor,
       });
       homeDispatch({
         field: 'name',
-        value: inputValue,
+        value: name,
       });
     }
   }, []);
