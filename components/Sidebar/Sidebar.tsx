@@ -34,6 +34,7 @@ interface Props<T> {
   handleCreateItem: (name: string) => void;
   handleCreateFolder: () => void;
   handleDrop: (e: any) => void;
+  openLoginModal: () => void;
 }
 
 const Sidebar = <T,>({
@@ -50,6 +51,7 @@ const Sidebar = <T,>({
   handleCreateItem,
   handleCreateFolder,
   handleDrop,
+  openLoginModal,
 }: Props<T>) => {
   const {
     state: {
@@ -190,7 +192,11 @@ const Sidebar = <T,>({
                   <p className="opacity-60 mb-2">
                     You need to login to see your session history.
                   </p>
-                  <p className="text-primary-green">Login now</p>
+                  <div onClick={openLoginModal} className="cursor-pointer">
+                    <p className="text-primary-green cursor pointer">
+                      Login now
+                    </p>
+                  </div>
                 </div>
               </div>
             )}

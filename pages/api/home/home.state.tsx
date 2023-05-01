@@ -30,6 +30,7 @@ export interface HomeInitialState {
   roomId: string | undefined;
   name: string | undefined;
   userColor: string;
+  isLoginModalOpen: boolean;
 }
 // Array of Animals
 const animals = [

@@ -28,7 +28,7 @@ import { ChatbarInitialState, initialState } from './Chatbar.state';
 import supabase from '@/lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 
-export const Chatbar = () => {
+export const Chatbar = ({ openLoginModal }) => {
   const { t } = useTranslation('sidebar');
 
   const chatBarContextValue = useCreateReducer<ChatbarInitialState>({
@@ -270,6 +270,7 @@ export const Chatbar = () => {
         handleCreateFolder={() => handleCreateFolder(t('New folder'), 'chat')}
         handleDrop={handleDrop}
         footerComponent={<ChatbarSettings />}
+        openLoginModal={openLoginModal}
       />
     </ChatbarContext.Provider>
   );

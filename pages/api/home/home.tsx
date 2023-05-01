@@ -35,6 +35,8 @@ import { Prompt } from '@/types/prompt';
 import { Chat } from '@/components/Chat/Chat';
 import { Chatbar } from '@/components/Chatbar/Chatbar';
 import { Navbar } from '@/components/Mobile/Navbar';
+import CharactersModal from '@/components/Modal/Characters';
+import LoginModal from '@/components/Modal/Login';
 import Promptbar from '@/components/Promptbar';
 
 import HomeContext from './home.context';
@@ -73,6 +75,8 @@ const Home = ({
   const { getModels } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isCharactersModalOpen, setCharactersModalOpen] = useState(false);
 
   const presenceChannelRef = useRef<any>(null);
 
@@ -684,6 +688,18 @@ const Home = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {isLoginModalOpen && (
+        <LoginModal
+          isLoginModalOpen={isLoginModalOpen}
+          closeLoginModal={() => setLoginModalOpen(false)}
+        />
+      )}
+      {isCharactersModalOpen && (
+        <CharactersModal
+          isCharactersModalOpen={isCharactersModalOpen}
+          closeCharactersModal={() => setCharactersModalOpen(false)}
+        />
+      )}
       {selectedConversation && (
         <main
           className={`flex h-screen w-screen flex-col text-sm text-white ${lightMode}`}
@@ -696,10 +712,13 @@ const Home = ({
           </div>
 
           <div className="flex h-full w-full pt-[48px] sm:pt-0">
-            <Chatbar />
+            <Chatbar openLoginModal={() => setLoginModalOpen(true)} />
 
             <div className="flex flex-1">
-              <Chat stopConversationRef={stopConversationRef} />
+              <Chat
+                stopConversationRef={stopConversationRef}
+                openCharactersModal={() => setCharactersModalOpen(true)}
+              />
             </div>
           </div>
         </main>

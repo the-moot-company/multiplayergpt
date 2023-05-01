@@ -25,9 +25,13 @@ const Characters = [
   },
 ];
 
-const Home = () => {
+const CharactersModal = ({ isCharactersModalOpen, closeCharactersModal }) => {
   return (
-    <Modal isDisplayed={true} onClose={() => {}} displayCloseButton={false}>
+    <Modal
+      isDisplayed={isCharactersModalOpen}
+      onClose={closeCharactersModal}
+      displayCloseButton={false}
+    >
       <div className="flex flex-col w-full">
         <h3 className="mb-1 text-lg font-medium">Select an AI character</h3>
         <p className="text-sm opacity-60 mb-4">
@@ -45,7 +49,10 @@ const Home = () => {
           ))}
         </div>
         <div className="mt-8 flex justify-end">
-          <button className="btn-sm btn rounded border border-base-300 bg-base-200 capitalize shadow-sm text-neutral hover:border-primary-green hover:bg-primary-green hover:text-white">
+          <button
+            onClick={closeCharactersModal}
+            className="btn-sm btn rounded border border-base-300 bg-base-200 capitalize shadow-sm text-neutral hover:border-primary-green hover:bg-primary-green hover:text-white"
+          >
             Close
           </button>
         </div>
@@ -54,4 +61,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default CharactersModal;
