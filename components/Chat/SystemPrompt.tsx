@@ -199,11 +199,11 @@ export const SystemPrompt: FC<Props> = ({
       <textarea
         disabled
         ref={textareaRef}
-        className="opacity-60 w-full rounded-lg border border-base-300 bg-base-200 px-4 py-3 text-neutral-900 dark:border-neutral-600 dark:text-neutral-100"
+        className="opacity-60 w-full rounded-lg border border-base-300 bg-base-200 px-4 py-3 text-neutral-900 dark:border-neutral-600 dark:text-neutral-100 text-xs"
         style={{
           resize: 'none',
           bottom: `${textareaRef?.current?.scrollHeight}px`,
-          maxHeight: '300px',
+          maxHeight: '400px',
           overflow: `${
             textareaRef.current && textareaRef.current.scrollHeight > 400
               ? 'auto'
@@ -211,7 +211,10 @@ export const SystemPrompt: FC<Props> = ({
           }`,
         }}
         placeholder={t(`Enter a prompt or select a character below`) || ''}
-        value={t(value) || ''}
+        // value={t(value) || ''}
+        value={
+          "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown."
+        }
         rows={1}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
