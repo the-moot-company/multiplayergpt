@@ -197,8 +197,9 @@ export const SystemPrompt: FC<Props> = ({
         {t('System Prompt')}
       </label>
       <textarea
+        disabled
         ref={textareaRef}
-        className="w-full rounded-lg border border-base-300 bg-base-200 px-4 py-3 text-neutral-900 dark:border-neutral-600 dark:text-neutral-100"
+        className="opacity-60 w-full rounded-lg border border-base-300 bg-base-200 px-4 py-3 text-neutral-900 dark:border-neutral-600 dark:text-neutral-100"
         style={{
           resize: 'none',
           bottom: `${textareaRef?.current?.scrollHeight}px`,
