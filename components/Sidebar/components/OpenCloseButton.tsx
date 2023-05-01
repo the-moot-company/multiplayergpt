@@ -11,7 +11,7 @@ export const CloseSidebarButton = ({ onClick, side }: Props) => {
       <button
         className={`mt-2 flex md:hidden ${
           side === 'right' ? 'right-[270px]' : 'left-[270px]'
-        } z-50 h-7 w-7 hover:text-gray-400 dark:text-white dark:hover:text-gray-300 sm:top-0.5 sm:${
+        } z-50 h-7 w-7 hover:text-gray-400 sm:top-0.5 sm:${
           side === 'right' ? 'right-[270px]' : 'left-[270px]'
         } sm:h-8 sm:w-8 sm:text-neutral-700`}
         onClick={onClick}
@@ -36,7 +36,7 @@ export const CloseSidebarButtonTwo = ({ onClick, side }: Props) => {
       <button
         className={`mt-2 ${
           side === 'right' ? 'right-[270px]' : 'left-[270px]'
-        } z-50 h-7 w-7 hover:text-gray-400 dark:text-white dark:hover:text-gray-300 sm:top-0.5 sm:${
+        } z-50 h-7 w-7 hover:text-gray-400 sm:top-0.5 sm:${
           side === 'right' ? 'right-[270px]' : 'left-[270px]'
         } sm:h-8 sm:w-8 sm:text-neutral-700`}
         onClick={onClick}

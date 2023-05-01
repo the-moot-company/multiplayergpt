@@ -62,7 +62,7 @@ export const PluginSelect: FC<Props> = ({
 
   return (
     <div className="flex flex-col">
-      <div className="mb-1 w-full rounded border border-neutral-200 bg-transparent pr-2 text-neutral-900 dark:border-neutral-600 dark:text-white">
+      <div className="mb-1 w-full rounded border border-neutral-200 bg-transparent pr-2 text-neutral-900">
         <select
           ref={selectRef}
           className="w-full cursor-pointer bg-transparent p-2"
@@ -79,20 +79,12 @@ export const PluginSelect: FC<Props> = ({
             handleKeyDown(e);
           }}
         >
-          <option
-            key="chatgpt"
-            value="chatgpt"
-            className="dark:bg-[#343541] dark:text-white"
-          >
+          <option key="chatgpt" value="chatgpt" className="">
             ChatGPT
           </option>
 
           {PluginList.map((plugin) => (
-            <option
-              key={plugin.id}
-              value={plugin.id}
-              className="dark:bg-[#343541] dark:text-white"
-            >
+            <option key={plugin.id} value={plugin.id} className="">
               {plugin.name}
             </option>
           ))}

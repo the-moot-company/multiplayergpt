@@ -101,7 +101,7 @@ export const initialState: HomeInitialState = {
   apiKey: '',
   loading: false,
   pluginKeys: [],
-  lightMode: 'dark',
+  lightMode: 'light',
   messageIsStreaming: false,
   modelError: null,
   models: [],

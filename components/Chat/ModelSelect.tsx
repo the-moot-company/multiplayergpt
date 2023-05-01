@@ -28,10 +28,8 @@ export const ModelSelect = () => {
 
   return (
     <div className="flex flex-col">
-      <label className="mb-2 text-left text-neutral-700 dark:text-neutral-400">
-        {t('Model')}
-      </label>
-      <div className="w-full rounded-lg border border-neutral-200 bg-base-200 pr-2 text-neutral-900 dark:border-neutral-600 dark:text-white">
+      <label className="mb-2 text-left text-neutral-700">{t('Model')}</label>
+      <div className="w-full rounded-lg border border-neutral-200 bg-base-200 pr-2 text-neutral-900">
         <select
           disabled
           className="w-full bg-transparent p-2 opacity-60"
@@ -48,7 +46,7 @@ export const ModelSelect = () => {
           ))}
         </select>
       </div>
-      {/* <div className="w-full mt-3 text-left text-neutral-700 dark:text-neutral-400 flex items-center">
+      {/* <div className="w-full mt-3 text-left text-neutral-700 flex items-center">
         <a
           href="https://platform.openai.com/account/usage"
           target="_blank"
