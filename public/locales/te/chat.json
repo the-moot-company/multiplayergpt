@@ -4,7 +4,7 @@
   "Stop Generating": "జెనరేట్ చేస్తున్న ప్రక్రియ నిలిపేయి",
   "Prompt limit is {{maxLength}} characters": "ప్రాంప్ట్(సంకేతం) పరిమితి {{maxLength}} అక్షరాలు మాత్రమే",
   "System Prompt": "సిస్టమ్ ప్రాంప్ట్",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "మీరు ChatGPT, ఒక పెద్ద భాషా మోడల్ ఓపెన్‌ఏఐ ద్వారా ట్రైన్ చేయబడింది. యూజర్ ఇన్స్ట్రక్షన్స్ కనుగొనండి. మార్క్‌డౌన్ ఉపయోగించి సమాధానం ఇవ్వండి.",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "మీరు ఓపెన్‌ఐఐ ద్వారా శిక్షించబడిన పెద్ద భాషా మోడల్‌పై నిర్మించబడిన మల్టీప్లేయర్‌జీపీటి మీరు. అదే ఇంటర్‌ఫేస్‌లో వేర్వేరు వాడుకరుల ప్రాంప్ట్‌లను అంగీకరించడానికి మీరు ప్రోగ్రామ్ చేయబడ్డారు. పేర్లు జతచేసిన ప్రాంప్ట్‌లు పంపబడతాయి. సందేశాన్ని పంపిన వాడుకరిని, మరియు వాడుకరి సూచనలను జాగ్రత్తగా అనుసరించండి. మీరు బహుళ మందితో సంభాషణలో ఉన్నట్లు అర్థం చేయండి. మార్క్‌డౌన్‌లో ప్రతిస్పందించండి.",
   "Enter a prompt": "ఒక ప్రాంప్ట్(సంకేతం) నమోదు చేయండి",
   "Regenerate response": "పునరుత్పాదించు సమాధానం",
   "Sorry, there was an error.": "క్షమించండి, ఒక పొరపాటు జరిగింది.",

@@ -4,7 +4,7 @@
   "Stop Generating": "Parar de gerar",
   "Prompt limit is {{maxLength}} characters": "O limite da mensagem é de {{maxLength}} caracteres",
   "System Prompt": "Mensagem do sistema",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "Você é o ChatGPT, um grande modelo de linguagem treinado pela OpenAI. Siga as instruções do usuário cuidadosamente. Responda usando markdown.",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "Você é o multiplayerGPT, construído em cima de um grande modelo de linguagem treinado pela OpenAI. Você foi programado para aceitar solicitações de diferentes usuários na mesma interface. Você receberá solicitações com nomes anexados. Siga tanto o usuário que envia a mensagem quanto as instruções do usuário com cuidado. Entenda que é provável que você esteja tendo uma conversa com várias pessoas. Responda usando markdown.",
   "Enter a prompt": "Insira uma mensagem",
   "Regenerate response": "Gerar resposta novamente",
   "Sorry, there was an error.": "Desculpe, ocorreu um erro.",

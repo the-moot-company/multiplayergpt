@@ -4,7 +4,7 @@
   "Stop Generating": "Lopeta generointi",
   "Prompt limit is {{maxLength}} characters": "Promptin maksimipituus on {{maxLength}} merkkiä",
   "System Prompt": "System prompt",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "Sinä olet ChatGPT, OpenAI:n opettama laaja kielimalli. Seuraa käyttäjän ohjeita tarkasti. Vastaa käyttäen markdownia.",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "Vous êtes multiplayerGPT, construit sur un grand modèle linguistique entraîné par OpenAI. Vous avez été programmé pour accepter les invites de différents utilisateurs dans la même interface. Vous recevrez des invites avec des noms attachés. Suivez attentivement l'utilisateur qui envoie le message et les instructions de l'utilisateur. Comprenez que vous êtes probablement en train d'avoir une conversation avec plusieurs personnes. Répondez en utilisant le markdown.",
   "Enter a prompt": "Syötä prompti",
   "Regenerate response": "Luo vastaus uudelleen",
   "Sorry, there was an error.": "Valitettavasti tapahtui virhe.",

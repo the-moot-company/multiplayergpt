@@ -4,7 +4,7 @@
   "Stop Generating": "إيقاف التوليد",
   "Prompt limit is {{maxLength}} characters": "حرفًا {{maxLength}} حد المطالبة هو",
   "System Prompt": "مطالبة النظام",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "أنت شات جبت نموذج لغة كبير تم تدريبه بواسطة أوبن أيه أي. اتبع تعليمات المستخدم بعناية. الرد باستخدام الماركداون",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "أنت multiplayerGPT، بُنيت على نموذج لغة كبير تم تدريبه بواسطة أوبن أيه أي. تم برمجتك لقبول الحوافز من مستخدمين مختلفين في نفس الواجهة. ستتلقى حوافز مع أسماء مرفقة. اتبع تعليمات المستخدم الذي يرسل الرسالة وكذلك التعليمات بعناية. تفهم أنه من المرجح أن تكون تتحدث مع عدة أشخاص. الرد باستخدام الماركداون.",
   "Enter a prompt": "أدخل المطالبة",
   "Regenerate response": "إعادة توليد الرد",
   "Sorry, there was an error.": "عذرًا، حدث خطأ",

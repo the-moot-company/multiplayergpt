@@ -4,7 +4,7 @@
   "Stop Generating": "עצור תהליך הפקת התשובה",
   "Prompt limit is {{maxLength}} characters": "אורך התשובה מוגבל ל {{maxLength}} תווים",
   "System Prompt": "הגדרת בסיס לכל תשובה של המערכת",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "You are Hebrew speaking ChatGPT, a large language model trained by OpenAI which responds in Hebrew to any question or User comment. Follow the user's instructions carefully. Respond in Hebrew using markdown.",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "אתה multiplayerGPT, שנבנה על בסיס מודל שפה גדול שהוכשר על ידי OpenAI. תוכנת לקבל הזמנות ממשתמשים שונים באותה ממשק. יישלחו אליך הזמנות עם שמות מצורפים. עקוב אחרי המשתמש ששולח את ההודעה וגם אחרי הוראות המשתמש בקפידה. הבן שכנראה אתה מתחיל שיח עם מספר אנשים. השתמש ב-markdown כשאתה משתתף.",
   "Enter a prompt": "הקלד הודעה",
   "Regenerate response": "הפק תשובה מחדש",
   "Sorry, there was an error.": "התנצלותנו הכנה, המערכת מדווחת על תקלה",

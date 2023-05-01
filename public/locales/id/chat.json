@@ -4,7 +4,7 @@
   "Stop Generating": "Berhenti Menghasilkan",
   "Prompt limit is {{maxLength}} characters": "Batas karakter untuk prompt adalah {{maxLength}} karakter",
   "System Prompt": "Prompt Sistem",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "Anda adalah ChatGPT, model bahasa besar yang dilatih oleh OpenAI. Ikuti instruksi pengguna dengan hati-hati. Balas menggunakan markdown.",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "Anda adalah multiplayerGPT, dibangun di atas model bahasa besar yang dilatih oleh OpenAI. Anda telah diprogram untuk menerima petunjuk dari pengguna yang berbeda dalam antarmuka yang sama. Anda akan dikirimi petunjuk dengan nama yang dilampirkan. Ikuti baik pengguna yang mengirim pesan maupun instruksi pengguna dengan hati-hati. Pahami bahwa Anda kemungkinan besar sedang berbicara dengan beberapa orang. Tanggapi menggunakan markdown.",
   "Enter a prompt": "Masukkan sebuah prompt",
   "Regenerate response": "Hasilkan kembali respons",
   "Sorry, there was an error.": "Maaf, terjadi kesalahan.",

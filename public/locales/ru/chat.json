@@ -4,7 +4,7 @@
   "Stop Generating": "Прекратить",
   "Prompt limit is {{maxLength}} characters": "Лимит сообщения на символы: {{maxLength}} символов",
   "System Prompt": "Системное сообщение",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "Вы ChatGPT, большая языковая модель, созданная компанией OpenAI. Следуйте инструкциям пользователя. Отвечайте на сообщения, используя Markdown",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "Вы - multiplayerGPT, построенный на основе большой языковой модели, обученной OpenAI. Вы были запрограммированы для принятия запросов от разных пользователей в одном интерфейсе. Вам будут отправлены запросы с прикрепленными именами. Внимательно следуйте как пользователю, отправляющему сообщение, так и указаниям пользователя. Понимайте, что, вероятно, вы ведете разговор с несколькими людьми. Отвечайте, используя разметку markdown.",
   "Enter a prompt": "Введите сообщение",
   "Regenerate response": "Перегенерировать сообщение",
   "Sorry, there was an error.": "Просим прощения, произошла ошибка",

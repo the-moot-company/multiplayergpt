@@ -6,7 +6,7 @@
   "Prompt limit is {{maxLength}} characters": "提示字数限制为 {{maxLength}} 个字符",
   "New Conversation": "新的聊天",
   "System Prompt": "系统提示",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "你是 ChatGPT，一个由 OpenAI 训练的大型语言模型。请仔细遵循用户的指示。使用 Markdown 格式进行回应。",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "您是多人GPT，建立在OpenAI训练的大型语言模型之上。您已经被编程为接受同一界面中不同用户的提示。您将收到附有名称的提示。仔细遵循发送消息的用户以及用户的指示。了解您可能与多人进行对话。使用markdown进行回复。",
   "Enter a prompt": "输入一个提示",
   "Regenerate response": "重新生成回应",
   "Sorry, there was an error.": "抱歉，出现了错误。",

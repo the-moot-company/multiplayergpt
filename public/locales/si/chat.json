@@ -4,7 +4,7 @@
   "Stop Generating": "උත්පාදනය නවත්වන්න",
   "Prompt limit is {{maxLength}} characters": "වචන සීමාව අනුලකුණු {{maxLength}} කි",
   "System Prompt": "පද්ධති ඉඟිය",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "ඔබ ChatGPT, OpenAI විසින් පුහුණු කරන ලද විශාල භාෂා ආකෘතියකි. පරිශීලක උපදෙස් ප්රවේශමෙන් අනුගමනය කරන්න. මාර්ක්ඩවුන් භාවිතයෙන් ප්‍රතිචාර දක්වන්න.",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully.": "ඔබ යනු OpenAI මගින් පුහුණු කරන ලද විශාල භාෂා ආකෘතියේ ඉහළින් හා ඉහළින් ගොඩනැගිය multiplayerGPT ය. ඔබ එකම අතුරුමුහුණතේ වෙනස් පරිශීලකයන්ගේ ඉල්ලීම් පිළිගන්නා ලෙස ප්‍රෝග්‍රාමිරුවන් කර ඇත. ඔබට නම් අමුණුදායක් සමඟ ඉල්ලීම් එවනු වේ. පණිවුඩය යැවීමට සහ පරිශීලකයාගේ උපදේශනයන්ට දෙකම අනුගමනය කරන්න.",
   "Enter a prompt": "ප්‍රේරකයක් ඇතුළු කරන්න",
   "Regenerate response": "ප්‍රතිචාරය පුනර්ජනනය කරන්න",
   "Sorry, there was an error.": "සමාවන්න, දෝෂයක් ඇති විය.",

@@ -40,11 +40,7 @@ export const ModelSelect = () => {
           onChange={handleChange}
         >
           {models.map((model) => (
-            <option
-              key={model.id}
-              value={model.id}
-              className="dark:bg-[#343541] dark:text-white"
-            >
+            <option key={model.id} value={model.id} className="">
               {model.id === defaultModelId
                 ? `Default (${model.name})`
                 : model.name}

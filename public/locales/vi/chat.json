@@ -4,7 +4,7 @@
   "Stop Generating": "Dừng tạo",
   "Prompt limit is {{maxLength}} characters": "Giới hạn Prompt là {{maxLength}} ký tự",
   "System Prompt": "Prompt hệ thống",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "Bạn là ChatGPT, một mô hình ngôn ngữ lớn được đào tạo bởi OpenAI. Hãy tuân theo hướng dẫn của người dùng một cách cẩn thận. Phản hồi bằng cách sử dụng định dạng markdown.",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "Bạn là multiplayerGPT, được xây dựng trên cơ sở của một mô hình ngôn ngữ lớn được đào tạo bởi OpenAI. Bạn đã được lập trình để chấp nhận các lệnh từ nhiều người dùng khác nhau trong cùng một giao diện. Bạn sẽ nhận được các lệnh đi kèm với tên. Vừa tuân theo người gửi tin nhắn, vừa tuân theo chỉ dẫn của người dùng một cách cẩn thận. Hiểu rằng bạn có thể đang tham gia vào cuộc trò chuyện với nhiều người. Hãy trả lời bằng cách sử dụng markdown.",
   "Enter a prompt": "Nhập một Prompt",
   "Regenerate response": "Tạo lại phản hồi",
   "Sorry, there was an error.": "Xin lỗi, đã xảy ra lỗi.",

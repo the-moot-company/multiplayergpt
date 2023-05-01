@@ -4,7 +4,7 @@
   "Stop Generating": "Durdur",
   "Prompt limit is {{maxLength}} characters": "Prompt sınırı {{maxLength}} karakterdir",
   "System Prompt": "Sistem Prompt",
-  "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "Sen ChatGPT'sin, OpenAI tarafından eğitilmiş büyük bir dil modelisin. Kullanıcının talimatlarını dikkatlice takip et. Yanıtını markdown kullanarak ver.",
+  "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.": "Sen, OpenAI tarafından eğitilmiş büyük bir dil modelinin üzerine inşa edilmiş çok oyunculuGPT'sin. Aynı arayüzde farklı kullanıcılardan gelen istekleri kabul etmek için programlandın. İsimlerle birlikte istekler alacaksın. Hem mesajı gönderen kullanıcıyı hem de kullanıcının talimatlarını dikkatlice takip et. Muhtemelen birden fazla kişiyle konuştuğunu anla. Markdown kullanarak yanıt ver.",
   "Enter a prompt": "Bir prompt girin",
   "Regenerate response": "Yanıtı Yeniden Oluştur",
   "Sorry, there was an error.": "Üzgünüm, bir hata oluştu.",
