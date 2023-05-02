@@ -306,10 +306,11 @@ export const ChatInput = ({
             <IconPlayerStop size={16} /> {t('Stop Generating')}
           </button>
         )}
-        <div className="align-right text-black text-xs opacity-60">
-          {typingMessage.message}
-        </div>
-        {/* {!messageIsStreaming &&
+        <div className="flex flex-col w-full px-2">
+          <div className="align-right text-black text-xs opacity-60 mb-2">
+            {typingMessage.message}
+          </div>
+          {/* {!messageIsStreaming &&
           selectedConversation &&
           selectedConversation.messages.length > 0 && (
             <button
@@ -320,8 +321,8 @@ export const ChatInput = ({
             </button>
           )} */}
 
-        <div className="relative mx-2 flex w-full flex-grow flex-col rounded-lg border border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-0 min-h-10 md:pt-0">
-          {/* <button
+          <div className="relative mx-2 flex w-full flex-grow flex-col rounded-lg border border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-0 min-h-10 md:pt-0">
+            {/* <button
             className="absolute left-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900"
             onClick={() => setShowPluginSelect(!showPluginSelect)}
             onKeyDown={(e) => {}}
@@ -329,95 +330,96 @@ export const ChatInput = ({
             {plugin ? <IconBrandGoogle size={20} /> : <IconBolt size={20} />}
           </button> */}
 
-          {showPluginSelect && (
-            <div className="absolute left-0 bottom-14 rounded bg-base-100">
-              <PluginSelect
-                plugin={plugin}
-                onKeyDown={(e: any) => {
-                  if (e.key === 'Escape') {
-                    e.preventDefault();
+            {showPluginSelect && (
+              <div className="absolute left-0 bottom-14 rounded bg-base-100">
+                <PluginSelect
+                  plugin={plugin}
+                  onKeyDown={(e: any) => {
+                    if (e.key === 'Escape') {
+                      e.preventDefault();
+                      setShowPluginSelect(false);
+                      textareaRef.current?.focus();
+                    }
+                  }}
+                  onPluginChange={(plugin: Plugin) => {
+                    setPlugin(plugin);
                     setShowPluginSelect(false);
-                    textareaRef.current?.focus();
-                  }
-                }}
-                onPluginChange={(plugin: Plugin) => {
-                  setPlugin(plugin);
-                  setShowPluginSelect(false);
 
-                  if (textareaRef && textareaRef.current) {
-                    textareaRef.current.focus();
-                  }
-                }}
-              />
-            </div>
-          )}
-
-          <textarea
-            ref={textareaRef}
-            className="m-0 w-full resize-none border-0 bg-transparent rounded-lg p-0 py-2 pr-8 pl-4 text-black md:py-3 focus:ring-2 focus:ring-offset-4 focus:ring-moot-primary focus:outline-base-300"
-            style={{
-              resize: 'none',
-              bottom: `${textareaRef?.current?.scrollHeight}px`,
-              maxHeight: '400px',
-              // outlineColor: userPresences[0].color,
-              overflow: `${
-                textareaRef.current && textareaRef.current.scrollHeight > 400
-                  ? 'auto'
-                  : 'hidden'
-              }`,
-            }}
-            placeholder={t('Type a message...') || ''}
-            value={typingMessage.content ? typingMessage.content : content}
-            disabled={typingMessage.content}
-            rows={1}
-            onCompositionStart={() => setIsTyping(true)}
-            onCompositionEnd={() => setIsTyping(false)}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-          />
-
-          <button
-            className="absolute right-2 top-1 md:top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900"
-            onClick={handleSend}
-          >
-            {messageIsStreaming ? (
-              <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-neutral-800 opacity-60"></div>
-            ) : (
-              <IconSend size={18} />
+                    if (textareaRef && textareaRef.current) {
+                      textareaRef.current.focus();
+                    }
+                  }}
+                />
+              </div>
             )}
-          </button>
 
-          {showScrollDownButton && (
-            <div className="absolute bottom-14 right-2 lg:bottom-14">
-              <button
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-base-100 border border-base-300 text-gray-800 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-moot-primary focus:ring-offset-2"
-                onClick={onScrollDownClick}
-              >
-                <IconArrowDown size={18} />
-              </button>
-            </div>
-          )}
-
-          {showPromptList && filteredPrompts.length > 0 && (
-            <div className="absolute bottom-12 w-full">
-              <PromptList
-                activePromptIndex={activePromptIndex}
-                prompts={filteredPrompts}
-                onSelect={handleInitModal}
-                onMouseOver={setActivePromptIndex}
-                promptListRef={promptListRef}
-              />
-            </div>
-          )}
-
-          {isModalVisible && (
-            <VariableModal
-              prompt={filteredPrompts[activePromptIndex]}
-              variables={variables}
-              onSubmit={handleSubmit}
-              onClose={() => setIsModalVisible(false)}
+            <textarea
+              ref={textareaRef}
+              className="m-0 w-full resize-none border-0 bg-transparent rounded-lg p-0 py-2 pr-8 pl-4 text-black md:py-3 focus:ring-2 focus:ring-offset-4 focus:ring-moot-primary focus:outline-base-300"
+              style={{
+                resize: 'none',
+                bottom: `${textareaRef?.current?.scrollHeight}px`,
+                maxHeight: '400px',
+                // outlineColor: userPresences[0].color,
+                overflow: `${
+                  textareaRef.current && textareaRef.current.scrollHeight > 400
+                    ? 'auto'
+                    : 'hidden'
+                }`,
+              }}
+              placeholder={t('Type a message...') || ''}
+              value={typingMessage.content ? typingMessage.content : content}
+              disabled={typingMessage.content}
+              rows={1}
+              onCompositionStart={() => setIsTyping(true)}
+              onCompositionEnd={() => setIsTyping(false)}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
             />
-          )}
+
+            <button
+              className="absolute right-2 top-1 md:top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900"
+              onClick={handleSend}
+            >
+              {messageIsStreaming ? (
+                <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-neutral-800 opacity-60"></div>
+              ) : (
+                <IconSend size={18} />
+              )}
+            </button>
+
+            {showScrollDownButton && (
+              <div className="absolute bottom-14 right-2 lg:bottom-14">
+                <button
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-base-100 border border-base-300 text-gray-800 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-moot-primary focus:ring-offset-2"
+                  onClick={onScrollDownClick}
+                >
+                  <IconArrowDown size={18} />
+                </button>
+              </div>
+            )}
+
+            {showPromptList && filteredPrompts.length > 0 && (
+              <div className="absolute bottom-12 w-full">
+                <PromptList
+                  activePromptIndex={activePromptIndex}
+                  prompts={filteredPrompts}
+                  onSelect={handleInitModal}
+                  onMouseOver={setActivePromptIndex}
+                  promptListRef={promptListRef}
+                />
+              </div>
+            )}
+
+            {isModalVisible && (
+              <VariableModal
+                prompt={filteredPrompts[activePromptIndex]}
+                variables={variables}
+                onSubmit={handleSubmit}
+                onClose={() => setIsModalVisible(false)}
+              />
+            )}
+          </div>
         </div>
       </div>
       <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 md:px-4 md:pt-3 md:pb-4">
