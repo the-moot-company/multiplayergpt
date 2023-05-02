@@ -559,8 +559,8 @@ export const Chat = memo(
             </div>
             <div className="text-center text-gray-500">
               <div className="mb-2">
-                MultiplayerGPT allows you to use OpenAI's GPT models in a
-                multiplayer setting.
+                {`MultiplayerGPT allows you to use OpenAI's GPT models in a
+                multiplayer setting.`}
               </div>
               <div className="mb-2">
                 It is <span className="italic">only</span> used to communicate
