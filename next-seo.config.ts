@@ -1,6 +1,6 @@
 const title = 'MultiplayerGPT by Moot';
 const description =
-  'MultiplayerGPT is a multiplayer version of ChatGPT by openAI. Built by Moot - the all-in-one collaborative workspace.';
+  'MultiplayerGPT is a multiplayer chatGPT experience. Not affiliated with OpenAI. Built by Moot - the all-in-one collaborative workspace.';
 
 const SEO = {
   title,

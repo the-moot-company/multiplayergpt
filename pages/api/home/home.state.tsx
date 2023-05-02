@@ -93,7 +93,7 @@ const userColors = [
   '#94B1F5',
   '#C2C7F4',
   '#F6DBE1',
-  '#EDF0F5',
+  '#708090',
 ];
 const randomColor = userColors[Math.floor(Math.random() * userColors.length)];
 

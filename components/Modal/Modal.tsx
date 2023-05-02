@@ -68,12 +68,12 @@ function Modal({
       <div
         data-theme="light"
         className={className(
-          'max-w-screen-lg',
+          'max-w-screen-lg max-h-screen',
           'fixed z-[1041]',
           transparent
             ? 'bg-transparent'
             : 'rounded-xl bg-base-100 border border-base-300',
-          { 'p-6  w-full md:w-auto': !isFixedSize },
+          { ' w-full md:w-auto': !isFixedSize },
           { 'w-[90%] h-[90%]': isFixedSize },
           'sm:max-w-full', // Add this to make the modal full width on small screens
         )}

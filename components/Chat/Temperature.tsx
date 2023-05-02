@@ -31,13 +31,15 @@ export const TemperatureSlider: FC<Props> = ({
 
   return (
     <div className="flex flex-col">
-      <label className="md:mb-2 text-left text-neutral-700">{label}</label>
+      <label className="text-left text-black text-xs uppercase opacity-60 pl-1 font-medium">
+        {label}
+      </label>
       <span className="text-[12px] text-black/50 text-sm hidden md:visible">
         {t(
           'Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.',
         )}
       </span>
-      <span className="mt-2 mb-1 text-center text-neutral-900">
+      <span className="mt-2 mb-1 text-center text-neutral-900 text-xs">
         {temperature.toFixed(1)}
       </span>
       <input
@@ -50,7 +52,7 @@ export const TemperatureSlider: FC<Props> = ({
         value={temperature}
         onChange={handleChange}
       />
-      <ul className="w mt-2 pb-8 flex justify-between px-[24px] text-neutral-900">
+      <ul className="w mt-2 pb-8 flex justify-between px-[24px] text-neutral-900 text-xs">
         <li className="flex justify-center">
           <span className="absolute">{t('Precise')}</span>
         </li>

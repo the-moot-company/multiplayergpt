@@ -193,7 +193,7 @@ export const SystemPrompt: FC<Props> = ({
 
   return (
     <div className="flex flex-col">
-      <label className="mb-2 text-left text-neutral-700">
+      <label className="mb-1 text-left text-black text-xs uppercase opacity-60 font-medium">
         {t('System Prompt')}
       </label>
       <textarea

@@ -359,6 +359,7 @@ export const ChatInput = ({
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
               maxHeight: '400px',
+              // outlineColor: userPresences[0].color,
               overflow: `${
                 textareaRef.current && textareaRef.current.scrollHeight > 400
                   ? 'auto'

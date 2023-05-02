@@ -12,6 +12,8 @@ import toast from 'react-hot-toast';
 import {
   HiOutlineBookOpen,
   HiOutlineLightBulb,
+  HiOutlineMail,
+  HiOutlineMailOpen,
   HiOutlineUser,
   HiOutlineUserAdd,
 } from 'react-icons/hi';
@@ -46,6 +48,7 @@ import { log } from 'console';
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
   openCharactersModal: () => void;
+  openUsecasesModal: () => void;
 }
 
 const getInitials = (name: string) => {
@@ -60,7 +63,7 @@ const getInitials = (name: string) => {
 };
 
 export const Chat = memo(
-  ({ stopConversationRef, openCharactersModal }: Props) => {
+  ({ stopConversationRef, openCharactersModal, openUsecasesModal }: Props) => {
     const { t } = useTranslation('chat');
 
     const {
@@ -493,41 +496,52 @@ export const Chat = memo(
     return (
       <div className="relative flex-1 overflow-hidden bg-pixel-noise">
         <div className="flex flex-row hidden md:flex md:absolute top-0 right-0 items-center z-10">
-          {userPresences.slice(0, 3).map((userPresence) => (
-            <div
-              key={userPresence.id}
-              className="group relative  bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2"
-              style={{
-                backgroundColor: userPresence.color,
-              }}
-            >
-              {getInitials(userPresence.name)}
+          <div className="flex flex-row items-center mr-4 mt-2">
+            {userPresences.slice(0, 3).map((userPresence) => (
               <div
-                className="absolute hidden top-0 bg-gray-200 text-gray-800 px-2 py-1 rounded mt-2 text-sm group-hover:block z-[11] text-white"
+                key={userPresence.id}
+                className="group relative shadow-md rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2"
                 style={{
                   backgroundColor: userPresence.color,
                 }}
               >
-                {userPresence.name}
+                {getInitials(userPresence.name)}
+                <div
+                  className="absolute hidden top-5 right-0 bg-gray-800 px-2 py-1 rounded mt-2 text-sm group-hover:block z-[11] text-white"
+                  style={{
+                    borderColor: userPresence.color,
+                  }}
+                >
+                  {userPresence.name}
+                </div>
               </div>
-            </div>
-          ))}
-          {userPresences.length > 3 && (
-            <div className="group relative bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 -mr-2 z-[11]">
-              +{userPresences.length - 3}
-              <div className="absolute hidden top-0 bg-moot-primary text-gray-800 px-2 py-1 rounded mt-2 text-sm group-hover:block z-[11] text-white">
-                {userPresences.slice(3).map((userPresence) => (
-                  <p key={userPresence.id}>{userPresence.name}</p>
-                ))}
+            ))}
+            {userPresences.length > 3 && (
+              <div className="group bg-moot-primary rounded-full h-6 w-6 flex items-center justify-center ring-2 ring-base-100 mr-2">
+                +{userPresences.length - 3}
+                <div className="hidden bg-moot-primary px-2 py-1 rounded mt-2 text-sm group-hover:block z-[11] text-white border-2 border-white shadow-sm">
+                  {userPresences.slice(3).map((userPresence) => (
+                    <p className="mt-4" key={userPresence.id}>
+                      {userPresence.name}
+                    </p>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
           <CopyToClipboard
             text={navigator.clipboard.writeText(window.location.href)}
           >
-            <button onClick={handleCopyToClipboard} className="p-2 text-black">
-              <HiOutlineUserAdd size={24} />
-            </button>
+            <div className="flex items-center justify-center p-1 rounded-lg border border-base-300 bg-base-200 mr-2 mt-2">
+              <button
+                onClick={handleCopyToClipboard}
+                className="p-2 text-black flex flex-row items-center"
+              >
+                {/* <HiOutlineUserAdd size={20} /> */}
+                <HiOutlineMailOpen className="mr-2" />
+                <p className="font-medium">Share</p>
+              </button>
+            </div>
           </CopyToClipboard>
         </div>
         {!(apiKey || serverSideApiKeyIsSet) ? (
@@ -537,19 +551,20 @@ export const Chat = memo(
             </div>
             <div className="text-center text-xl font-medium text-black">
               MultiplayerGPT is a project by Moot, the all-in-one collaborative
-              workspace for remote teams
+              workspace for remote teams. Start by copying invite link below.
+              Not affliated with OpenAI.
             </div>
             <div className="text-center text-lg text-black">
               <div className="mb-8">{`MultiplayerGPT is largely written on top of Chatbot UI, an open source clone of OpenAI's ChatGPT UI.`}</div>
             </div>
             <div className="text-center text-gray-500">
               <div className="mb-2">
-                MultiplayerGPT allows you to plug in your API key to use this UI
-                with their API.
+                MultiplayerGPT allows you to use OpenAI's GPT models in a
+                multiplayer setting.
               </div>
               <div className="mb-2">
                 It is <span className="italic">only</span> used to communicate
-                with their API.
+                with their API. MultiplayerGPT is not affiliated with OpenAI.
               </div>
               <div className="mb-2">
                 {t(
@@ -595,19 +610,27 @@ export const Chat = memo(
                       <div className="flex flex-col">
                         <div className="flex h-full flex-col space-y-4 rounded-xl bg-base-100 border border-base-300 p-6 mb-6">
                           <div className="flex flex-col text-center">
-                            <div className="hidden md:flex flex-row items-end mb-2">
-                              <p className="text-lg md:text-3xl font-medium text-gray-800 text-left">
+                            <div className="hidden md:flex flex-row items-end">
+                              <p className="text-lg font-medium text-gray-800 text-left">
                                 MultiplayerGPT
                               </p>
-                              <p className="md:text-lg font-medium text-gray-800 text-left ml-1">
-                                by Moot
+                              <p className="text-xs text-gray-800 text-left ml-1 mb-1">
+                                by{' '}
+                                <a
+                                  href="https://moot.app"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="underline"
+                                >
+                                  Moot
+                                </a>
                               </p>
                             </div>
-                            <p className="hidden md:flex stext-sm md:text-md font-regular text-gray-800 opacity-60 text-left mb-4 md:w-4/5">
-                              Multiplayer GPT is a multiplayer chatGPT
-                              experience by Moot - it allows collaboration
-                              between multiple users. Try for free, login for
-                              more features.
+                            <p className="hidden md:flex stext-sm md:text-md font-regular text-gray-800 text-left mb-2 md:w-4/5">
+                              A multiplayer chatGPT enabling a chatGPT
+                              experience between multiple users. Start by
+                              copying invite link below. Not affiliated with
+                              OpenAI.
                             </p>
                           </div>
                           <ModelSelect />
@@ -641,14 +664,30 @@ export const Chat = memo(
                             <HiOutlineUser className="mr-2" />
                             Select character
                           </div>
-                          <div className="mb-2 mx-2 px-4 py-2 bg-primary-blue rounded-full text-white shadow-sm flex flex-row items-center justify-center cursor-pointer">
+                          {/* <div className="mb-2 mx-2 px-4 py-2 bg-primary-blue rounded-full text-white shadow-sm flex flex-row items-center justify-center cursor-pointer">
                             <HiOutlineBookOpen className="mr-2" /> Prompt
                             library
-                          </div>
-                          <div className="mb-2 mx-2 px-4 py-2 bg-primary-green rounded-full text-white shadow-sm flex flex-row items-center justify-center cursor-pointer">
+                          </div> */}
+                          <div
+                            onClick={openUsecasesModal}
+                            className="mb-2 mx-2 px-4 py-2 bg-primary-green rounded-full text-white shadow-sm flex flex-row items-center justify-center cursor-pointer"
+                          >
                             <HiOutlineLightBulb className="mr-2" />
                             See Usecases
                           </div>
+                          <CopyToClipboard
+                            text={navigator.clipboard.writeText(
+                              window.location.href,
+                            )}
+                          >
+                            <div
+                              onClick={handleCopyToClipboard}
+                              className="mb-2 mx-2 px-4 py-2 bg-primary-blue rounded-full text-white shadow-sm flex flex-row items-center justify-center cursor-pointer"
+                            >
+                              <HiOutlineMailOpen className="mr-2" />
+                              Invite link
+                            </div>
+                          </CopyToClipboard>
                         </div>
                       </div>
                     )}

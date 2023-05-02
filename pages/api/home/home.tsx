@@ -37,6 +37,7 @@ import { Chatbar } from '@/components/Chatbar/Chatbar';
 import { Navbar } from '@/components/Mobile/Navbar';
 import CharactersModal from '@/components/Modal/Characters';
 import LoginModal from '@/components/Modal/Login';
+import UsecasesModal from '@/components/Modal/Usecases';
 import Promptbar from '@/components/Promptbar';
 
 import HomeContext from './home.context';
@@ -77,6 +78,7 @@ const Home = ({
   const [initialRender, setInitialRender] = useState<boolean>(true);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isCharactersModalOpen, setCharactersModalOpen] = useState(false);
+  const [isUsecasesModalOpen, setUsecasesModalOpen] = useState(false);
 
   const presenceChannelRef = useRef<any>(null);
 
@@ -700,6 +702,12 @@ const Home = ({
           closeCharactersModal={() => setCharactersModalOpen(false)}
         />
       )}
+      {isUsecasesModalOpen && (
+        <UsecasesModal
+          isUsecasesModalOpen={isUsecasesModalOpen}
+          closeUsecasesModal={() => setUsecasesModalOpen(false)}
+        />
+      )}
       {selectedConversation && (
         <main
           className={`flex h-screen w-screen flex-col text-sm text-white ${lightMode}`}
@@ -718,6 +726,7 @@ const Home = ({
               <Chat
                 stopConversationRef={stopConversationRef}
                 openCharactersModal={() => setCharactersModalOpen(true)}
+                openUsecasesModal={() => setUsecasesModalOpen(true)}
               />
             </div>
           </div>
