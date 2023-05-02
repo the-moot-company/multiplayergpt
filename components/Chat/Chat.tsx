@@ -645,16 +645,17 @@ export const Chat = memo(
                               })
                             }
                           />
-
-                          <TemperatureSlider
-                            label={t('Temperature')}
-                            onChangeTemperature={(temperature) =>
-                              handleUpdateConversation(selectedConversation, {
-                                key: 'temperature',
-                                value: temperature,
-                              })
-                            }
-                          />
+                          <div className="hidden md:block w-full">
+                            <TemperatureSlider
+                              label={t('Temperature')}
+                              onChangeTemperature={(temperature) =>
+                                handleUpdateConversation(selectedConversation, {
+                                  key: 'temperature',
+                                  value: temperature,
+                                })
+                              }
+                            />
+                          </div>
                         </div>
                         <div className="flex flex-row items-center justify-center text-black flex-wrap sm:flex-nowrap">
                           <div
