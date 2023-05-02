@@ -608,7 +608,7 @@ export const Chat = memo(
 
                     {models.length > 0 && (
                       <div className="flex flex-col">
-                        <div className="flex h-full flex-col space-y-4 rounded-xl bg-base-100 border border-base-300 p-6 mb-6">
+                        <div className="flex h-full flex-col space-y-4 rounded-xl bg-base-100 border border-base-300 p-6 mb-6 mt-0 sm:mt-8">
                           <div className="flex flex-col text-center">
                             <div className="hidden md:flex flex-row items-end">
                               <p className="text-lg font-medium text-gray-800 text-left">
