@@ -68,7 +68,7 @@ function Modal({
       <div
         data-theme="light"
         className={className(
-          'max-w-screen-lg max-h-screen',
+          'max-w-screen-lg max-h-screen w-[89%] lg:max-w-2xl',
           'fixed z-[1041]',
           transparent
             ? 'bg-transparent'

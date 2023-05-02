@@ -189,7 +189,7 @@ const CharactersModal = ({ isCharactersModalOpen, closeCharactersModal }) => {
         <h3 className="mb-1 text-lg font-medium text-left">
           Select an AI character
         </h3>
-        <p className="text-sm opacity-60 mb-4">
+        <p className="opacity-60 mb-8 md:mb-4">
           Characters help target your conversations
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full pb-12">

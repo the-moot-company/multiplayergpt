@@ -19,7 +19,7 @@ const LoginModal = ({ isLoginModalOpen, closeLoginModal }) => {
     >
       <div className="flex flex-col w-full p-6">
         <h3 className="mb-1 text-2xl font-medium">Login</h3>
-        <p className="opacity-60 mb-8">
+        <p className="opacity-60 mb-8 md:mb-4">
           Login coming soon. Register interest here.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 mb-2 gap-4">

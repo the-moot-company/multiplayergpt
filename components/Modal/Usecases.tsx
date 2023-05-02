@@ -104,7 +104,7 @@ const UsecasesModal = ({ isUsecasesModalOpen, closeUsecasesModal }) => {
     >
       <div className="flex flex-col w-full overflow-y-scroll h-96 p-8">
         <h3 className="mb-1 text-lg font-medium text-left">Usecases</h3>
-        <p className="text-sm opacity-60 mb-4">How to use MultiplayerGPT</p>
+        <p className="opacity-60 mb-8 md:mb-4">How to use MultiplayerGPT</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full pb-12">
           {Usecases.map((usecase) => (
             <div

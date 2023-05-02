@@ -34,7 +34,7 @@ export const CloseSidebarButtonTwo = ({ onClick, side }: Props) => {
   return (
     <>
       <button
-        className={`mt-3 mr-1 ${
+        className={`md:mt-3 mr-1 ${
           side === 'right' ? 'right-[270px]' : 'left-[270px]'
         } z-50 h-7 w-7 hover:text-gray-400 sm:top-0.5 sm:${
           side === 'right' ? 'right-[270px]' : 'left-[270px]'
@@ -50,7 +50,7 @@ export const CloseSidebarButtonTwo = ({ onClick, side }: Props) => {
 export const OpenSidebarButton = ({ onClick, side }: Props) => {
   return (
     <button
-      className={`fixed top-2.5 ${
+      className={`fixed top-1.5 md:top-2.5 ${
         side === 'right' ? 'right-2' : 'left-2'
       } z-50 h-7 w-7 text-black hover:text-gray-400 sm:top-0.5 sm:${
         side === 'right' ? 'right-2' : 'left-2 ml-1 mt-2'
