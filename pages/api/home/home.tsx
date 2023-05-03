@@ -79,6 +79,7 @@ const Home = ({
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isCharactersModalOpen, setCharactersModalOpen] = useState(false);
   const [isUsecasesModalOpen, setUsecasesModalOpen] = useState(false);
+  const [characterSelected, setCharacterSelected] = useState(null);
 
   const presenceChannelRef = useRef<any>(null);
 
@@ -668,6 +669,12 @@ const Home = ({
     serverSidePluginKeysSet,
   ]);
 
+  const handleCharacterSelect = (character: Character) => {
+    // dispatch({ field: 'selectedCharacter', value: character });
+    setCharacterSelected(character);
+    setCharactersModalOpen(false);
+  };
+
   return (
     <HomeContext.Provider
       value={{
@@ -700,6 +707,7 @@ const Home = ({
         <CharactersModal
           isCharactersModalOpen={isCharactersModalOpen}
           closeCharactersModal={() => setCharactersModalOpen(false)}
+          onCharacterSelect={(character) => handleCharacterSelect(character)}
         />
       )}
       {isUsecasesModalOpen && (
@@ -727,6 +735,7 @@ const Home = ({
                 stopConversationRef={stopConversationRef}
                 openCharactersModal={() => setCharactersModalOpen(true)}
                 openUsecasesModal={() => setUsecasesModalOpen(true)}
+                characterSelected={characterSelected}
               />
             </div>
           </div>

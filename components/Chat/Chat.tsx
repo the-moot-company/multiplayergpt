@@ -45,10 +45,17 @@ import { TemperatureSlider } from './Temperature';
 import supabase from '@/lib/supabase';
 import { log } from 'console';
 
+type Character = {
+  name: string;
+  description: string;
+  prompt: string;
+};
+
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
   openCharactersModal: () => void;
   openUsecasesModal: () => void;
+  characterSelected: Character;
 }
 
 const getInitials = (name: string) => {
@@ -63,7 +70,12 @@ const getInitials = (name: string) => {
 };
 
 export const Chat = memo(
-  ({ stopConversationRef, openCharactersModal, openUsecasesModal }: Props) => {
+  ({
+    stopConversationRef,
+    openCharactersModal,
+    openUsecasesModal,
+    characterSelected,
+  }: Props) => {
     const { t } = useTranslation('chat');
 
     const {
@@ -97,10 +109,7 @@ export const Chat = memo(
       [selectedConversation?.id],
     );
 
-    const [currentMessage, setCurrentMessage] = useState<Message>({
-      role: 'user',
-      content: '',
-    });
+    const [currentMessage, setCurrentMessage] = useState<Message>();
     const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
     const [showSettings, setShowSettings] = useState<boolean>(false);
     const [showScrollDownButton, setShowScrollDownButton] =
@@ -201,7 +210,7 @@ export const Chat = memo(
             return;
           }
           if (!plugin) {
-            if (updatedConversation.messages.length > 1) {
+            if (updatedConversation.messages.length === 1) {
               const { content } = message;
               const customName =
                 content.length > 30
@@ -297,7 +306,7 @@ export const Chat = memo(
                   role: 'assistant',
                   content: text,
                 };
-                const { data: message, error } = await supabase
+                const { data: receivedMessage, error } = await supabase
                   .from('message')
                   .upsert([
                     {
@@ -334,7 +343,7 @@ export const Chat = memo(
             const newMessage = { role: 'assistant', content: text };
             homeDispatch({ field: 'loading', value: false });
 
-            const { data: message, error } = await supabase
+            const { data: receivedMessage, error } = await supabase
               .from('message')
               .upsert([
                 {
@@ -647,6 +656,7 @@ export const Chat = memo(
                                 value: prompt,
                               })
                             }
+                            characterSelected={characterSelected}
                           />
                           <div className="hidden md:block w-full">
                             <TemperatureSlider

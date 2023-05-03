@@ -21,12 +21,18 @@ interface Props {
   conversation: Conversation;
   prompts: Prompt[];
   onChangePrompt: (prompt: string) => void;
+  characterSelected: {
+    name: string;
+    description: string;
+    prompt: string;
+  };
 }
 
 export const SystemPrompt: FC<Props> = ({
   conversation,
   prompts,
   onChangePrompt,
+  characterSelected,
 }) => {
   const { t } = useTranslation('chat');
 
@@ -193,9 +199,14 @@ export const SystemPrompt: FC<Props> = ({
 
   return (
     <div className="flex flex-col">
-      <label className="mb-1 text-left text-black text-xs uppercase opacity-60 font-medium">
-        {t('System Prompt')}
-      </label>
+      <div className="flex flex-row items-center mb-2">
+        <label className="text-left text-black text-xs uppercase opacity-60 font-medium mr-2">
+          {t('System Prompt')}
+        </label>
+        <div className="text-xs text-white bg-moot-primary rounded-full px-1 py-.5 flex items-center justify-center">
+          {characterSelected?.name}
+        </div>
+      </div>
       <textarea
         disabled
         ref={textareaRef}
@@ -212,9 +223,9 @@ export const SystemPrompt: FC<Props> = ({
         }}
         placeholder={t(`Enter a prompt or select a character below`) || ''}
         // value={t(value) || ''}
-        value={
-          "You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown."
-        }
+        value={`You are multiplayerGPT, built on top of a large language model trained by OpenAI. You have been programmed to accept prompts from different users in the same interface. You will be sent prompts with names attached. Follow both the user sending the message, as well as the user's instructions carefully. Understand that you are likely having a conversation with multiple people. Respond using markdown.${
+          characterSelected?.prompt ? '\n\n' + characterSelected?.prompt : ''
+        }`}
         rows={1}
         onChange={handleChange}
         onKeyDown={handleKeyDown}

@@ -162,7 +162,11 @@ const Characters = [
   },
 ];
 
-const CharactersModal = ({ isCharactersModalOpen, closeCharactersModal }) => {
+const CharactersModal = ({
+  isCharactersModalOpen,
+  closeCharactersModal,
+  onCharacterSelect,
+}) => {
   const [characterSelected, setCharacterSelected] = useState(null);
 
   const selectCharacter = (character) => {
@@ -175,6 +179,7 @@ const CharactersModal = ({ isCharactersModalOpen, closeCharactersModal }) => {
       closeCharactersModal();
     } else {
       //dispatch character selection into prompt
+      onCharacterSelect(characterSelected);
       closeCharactersModal();
     }
   };

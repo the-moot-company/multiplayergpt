@@ -28,7 +28,7 @@ export const ModelSelect = () => {
 
   return (
     <div className="flex flex-col">
-      <label className="mb-1 text-left text-black text-xs uppercase opacity-60 font-medium">
+      <label className="mb-2 text-left text-black text-xs uppercase opacity-60 font-medium">
         {t('Model')}
       </label>
       <div className="w-full rounded-lg border border-neutral-200 bg-base-200 pr-2 text-neutral-900">
