@@ -97,7 +97,10 @@ export const Chat = memo(
       [selectedConversation?.id],
     );
 
-    const [currentMessage, setCurrentMessage] = useState<Message>();
+    const [currentMessage, setCurrentMessage] = useState<Message>({
+      role: 'user',
+      content: '',
+    });
     const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
     const [showSettings, setShowSettings] = useState<boolean>(false);
     const [showScrollDownButton, setShowScrollDownButton] =
@@ -198,7 +201,7 @@ export const Chat = memo(
             return;
           }
           if (!plugin) {
-            if (updatedConversation.messages.length === 1) {
+            if (updatedConversation.messages.length > 1) {
               const { content } = message;
               const customName =
                 content.length > 30

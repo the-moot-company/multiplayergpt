@@ -111,13 +111,13 @@ const UsecasesModal = ({ isUsecasesModalOpen, closeUsecasesModal }) => {
               key={usecase.name}
               className="cursor-pointer flex flex-col p-4 items-center justify-start rounded-md border-2"
             >
-              <div className="flex flex-row items-center justify-start w-full">
+              <div className="flex flex-row items-center justify-start w-full mb-2">
                 {usecase.icon}
                 <h4 className="text-lg font-medium text-left w-full ml-2">
                   {usecase.name}
                 </h4>
               </div>
-              <p className="text-sm opacity-60 text-left">
+              <p className="text-sm opacity-60 text-left w-full">
                 {usecase.description}
               </p>
             </div>
