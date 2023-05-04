@@ -29,9 +29,7 @@ export const Navbar: FC<Props> = ({
         {selectedConversation.name}
       </div>
 
-      <CopyToClipboard
-        text={navigator.clipboard.writeText(window.location.href)}
-      >
+      <CopyToClipboard text={window.location.href}>
         <button onClick={handleCopyToClipboard}>
           <HiOutlineUserAdd
             className="cursor-pointer hover:text-neutral-500 mt-.5"

@@ -541,9 +541,7 @@ export const Chat = memo(
               </div>
             )}
           </div>
-          <CopyToClipboard
-            text={navigator.clipboard.writeText(window.location.href)}
-          >
+          <CopyToClipboard text={window.location.href}>
             <div className="flex items-center justify-center p-1 rounded-lg border border-base-300 bg-base-200 mr-2 mt-2">
               <button
                 onClick={handleCopyToClipboard}
@@ -689,11 +687,7 @@ export const Chat = memo(
                             <HiOutlineLightBulb className="mr-2" />
                             See Usecases
                           </div>
-                          <CopyToClipboard
-                            text={navigator.clipboard.writeText(
-                              window.location.href,
-                            )}
-                          >
+                          <CopyToClipboard text={window.location.href}>
                             <div
                               onClick={handleCopyToClipboard}
                               className="mb-2 mx-2 px-4 py-2 bg-primary-blue rounded-full text-white shadow-sm flex flex-row items-center justify-center cursor-pointer"
