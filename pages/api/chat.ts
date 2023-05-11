@@ -22,7 +22,7 @@ const handler = async (req: Request): Promise<Response> => {
       id: 'gpt-3.5-turbo',
       name: 'GPT-3.5',
       maxLength: 12000,
-      tokenLimit: 4000,
+      tokenLimit: 2500, //4000,
     };
 
     await init((imports) => WebAssembly.instantiate(wasm, imports));
