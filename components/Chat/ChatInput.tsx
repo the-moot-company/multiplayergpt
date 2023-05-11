@@ -380,6 +380,7 @@ export const ChatInput = ({
             <button
               className="absolute right-2 top-1 md:top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900"
               onClick={handleSend}
+              disabled={messageIsStreaming}
             >
               {messageIsStreaming ? (
                 <div className="h-4 w-4 animate-spin rounded-full border-t-2 border-neutral-800 opacity-60"></div>

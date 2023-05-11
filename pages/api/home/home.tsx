@@ -371,9 +371,13 @@ const Home = ({
     });
   }, [selectedConversation, name, userColor]);
 
-  useEffect(() => {
-    const allConversationIds = conversations.map((c) => c.id);
+  const selectedConversationRef = useRef(selectedConversation);
+  const conversationsRef = useRef(conversations);
 
+  selectedConversationRef.current = selectedConversation;
+  conversationsRef.current = conversations;
+
+  useEffect(() => {
     let errorToastId: undefined | string;
 
     const messageChannel = supabase
@@ -386,9 +390,16 @@ const Home = ({
           event: '*',
         },
         (payload) => {
+          const conversations = conversationsRef.current;
+
+          const allConversationIds = conversations.map((c) => c.id);
+
+          console.log('allConversationIds', allConversationIds);
           if (!allConversationIds.includes(payload.new.conversationId)) {
+            console.log('message not in current conversation');
             return;
           }
+          const selectedConversation = selectedConversationRef.current;
 
           if (payload.eventType === 'INSERT') {
             const newMessage = payload.new;
@@ -407,13 +418,23 @@ const Home = ({
             dispatch({ field: 'conversations', value: updatedConversations });
 
             if (newMessage.conversationId === selectedConversation?.id) {
+              console.log('new message', newMessage.content);
+              selectedConversationRef.current = {
+                ...selectedConversation,
+                messages: [...selectedConversation.messages, newMessage],
+              };
               dispatch({
                 field: 'selectedConversation',
-                value: {
-                  ...selectedConversation,
-                  messages: [...selectedConversation.messages, newMessage],
-                },
+                // value: {
+                //   ...selectedConversation,
+                //   messages: [...selectedConversation.messages, newMessage],
+                // },
+                value: selectedConversationRef.current,
               });
+              console.log('dispatched ', newMessage.content);
+              console.log(
+                [...selectedConversation.messages, newMessage].length,
+              );
             }
           }
 
@@ -440,6 +461,10 @@ const Home = ({
 
               return c;
             });
+            dispatch({
+              field: 'messageIsStreaming',
+              value: !updatedMessage.is_done,
+            });
 
             dispatch({ field: 'conversations', value: updatedConversations });
 
@@ -447,13 +472,22 @@ const Home = ({
               const newSelectedConversation = updatedConversations.find(
                 (c) => c.id === selectedConversation.id,
               );
-
+              console.log(
+                'new selected conversation',
+                newSelectedConversation?.messages.length,
+              );
               dispatch({
                 field: 'selectedConversation',
                 value: newSelectedConversation,
               });
             }
           }
+
+          console.log(
+            selectedConversation?.messages[
+              selectedConversation.messages.length - 1
+            ].content,
+          );
         },
       )
       .subscribe((status) => {
@@ -477,7 +511,7 @@ const Home = ({
     return () => {
       supabase.removeChannel(messageChannel);
     };
-  }, [selectedConversation?.id, conversations, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     let errorToastId: undefined | string;

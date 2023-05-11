@@ -143,15 +143,17 @@ export const Chat = memo(
             };
           }
 
-          const { error } = await supabase.from('message').insert([
-            {
-              author: localStorage.getItem('name') ?? 'Anonymous',
-              authorColor: localStorage.getItem('color') ?? '#FF7258',
-              conversationId: selectedConversation.id,
-              role: message.role,
-              content: message.content,
-            },
-          ]);
+          const { data: messageData, error } = await supabase
+            .from('message')
+            .insert([
+              {
+                author: localStorage.getItem('name') ?? 'Anonymous',
+                authorColor: localStorage.getItem('color') ?? '#FF7258',
+                conversationId: selectedConversation.id,
+                role: message.role,
+                content: message.content,
+              },
+            ]);
 
           // @Incomplete - error handling
           if (error) {
@@ -272,6 +274,7 @@ export const Chat = memo(
                       role: newMessage.role,
                       content: newMessage.content,
                       author: localStorage.getItem('name') ?? 'Anonymous',
+                      is_done: false,
                     },
                   ])
                   .select('id')
@@ -352,6 +355,7 @@ export const Chat = memo(
                   role: newMessage.role,
                   content: newMessage.content,
                   author: localStorage.getItem('name') ?? 'Anonymous',
+                  is_done: true,
                 },
               ]);
 
