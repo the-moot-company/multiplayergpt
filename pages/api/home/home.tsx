@@ -394,7 +394,6 @@ const Home = ({
 
           const allConversationIds = conversations.map((c) => c.id);
 
-          console.log('allConversationIds', allConversationIds);
           if (!allConversationIds.includes(payload.new.conversationId)) {
             console.log('message not in current conversation');
             return;
@@ -482,12 +481,6 @@ const Home = ({
               });
             }
           }
-
-          console.log(
-            selectedConversation?.messages[
-              selectedConversation.messages.length - 1
-            ].content,
-          );
         },
       )
       .subscribe((status) => {
