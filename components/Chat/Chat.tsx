@@ -142,6 +142,10 @@ export const Chat = memo(
               messages: [...selectedConversation.messages, message],
             };
           }
+          homeDispatch({
+            field: 'selectedConversation',
+            value: updatedConversation,
+          });
 
           const { data: messageData, error } = await supabase
             .from('message')
@@ -153,7 +157,9 @@ export const Chat = memo(
                 role: message.role,
                 content: message.content,
               },
-            ]);
+            ])
+            .select()
+            .single();
 
           // @Incomplete - error handling
           if (error) {
@@ -162,7 +168,13 @@ export const Chat = memo(
 
           homeDispatch({
             field: 'selectedConversation',
-            value: updatedConversation,
+            value: {
+              ...updatedConversation,
+              messages: [
+                ...updatedConversation.messages.slice(0, -1),
+                messageData,
+              ],
+            },
           });
           homeDispatch({ field: 'loading', value: true });
           homeDispatch({ field: 'messageIsStreaming', value: true });
