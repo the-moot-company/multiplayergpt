@@ -762,6 +762,7 @@ const Home = ({
                 openCharactersModal={() => setCharactersModalOpen(true)}
                 openUsecasesModal={() => setUsecasesModalOpen(true)}
                 characterSelected={characterSelected}
+                openLoginModal={() => setLoginModalOpen(true)}
               />
             </div>
           </div>

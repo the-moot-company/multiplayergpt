@@ -57,6 +57,7 @@ interface Props {
   openCharactersModal: () => void;
   openUsecasesModal: () => void;
   characterSelected: Character;
+  openLoginModal: () => void;
 }
 
 const getInitials = (name: string) => {
@@ -76,6 +77,7 @@ export const Chat = memo(
     openCharactersModal,
     openUsecasesModal,
     characterSelected,
+    openLoginModal,
   }: Props) => {
     const { t } = useTranslation('chat');
 
@@ -145,7 +147,28 @@ export const Chat = memo(
           }
 
           if (updatedConversation.messages.length > MESSAGE_LIMIT) {
-            toast.error(message_limit_error);
+            toast(
+              (t) => (
+                <span>
+                  Free message limit reached.{' '}
+                  <button
+                    onClick={() => {
+                      toast.dismiss(t.id);
+                      openLoginModal();
+                    }}
+                    className="text-blue-500 hover:underline"
+                  >
+                    Login
+                  </button>{' '}
+                  to continue
+                </span>
+              ),
+              {
+                icon: '🔒',
+                duration: Infinity,
+                id: 'message-limit',
+              },
+            );
             return;
           }
           homeDispatch({
