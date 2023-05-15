@@ -60,7 +60,7 @@ const LoginModal = ({ isLoginModalOpen, closeLoginModal }) => {
           <h3 className="text-md md:text-xl font-medium mr-2">
             Login to MultiplayerGPT
           </h3>
-          <div className="bg-base-200 rounded-full px-2 text-xs py-1">
+          <div className="bg-base-100 rounded-full px-2 text-xs py-1">
             coming soon
           </div>
         </div>
@@ -94,23 +94,23 @@ const LoginModal = ({ isLoginModalOpen, closeLoginModal }) => {
                 id="email"
                 value={emailSubmission}
                 onChange={(e) => setEmailSubmission(e.target.value)}
-                className="flex border border-base-300 md:mb-0 h-8 px-2 w-full rounded-md shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
+                className="flex border border-base-300 md:mb-0 h-10 px-2 w-full rounded-md shadow-sm focus:border-primary focus:outline-none focus:ring-primary sm:text-sm"
                 placeholder="you@email.com"
               />
             </div>
             {!isLoading ? (
               <button className="mt-4 md:mt-0 bg-moot-primary border-none hover:shadow-lg hover:shadow-primary-fade bg-gradient-button rounded-md inline-flex w-full items-center justify-center border border-transparent bg-primary px-4 py-2 font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                Go!{' '}
+                Submit{' '}
               </button>
             ) : (
               <button className="mt-4 md:mt-0 bg-moot-primary loading border-none hover:shadow-lg hover:shadow-primary-fade bg-gradient-button rounded-md inline-flex w-full items-center justify-center border border-transparent bg-primary px-4 py-2 font-medium text-white shadow-sm hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                Go!{' '}
+                Submit{' '}
               </button>
             )}
           </form>
         ) : (
           <div className="mt-2 max-w-xl text-sm opacity-60 bg-base-200 rounded-md p-2">
-            Great! We'll send you an email to confirm 🌐✨
+            <p>{"Great! We'll send you an email to confirm 🌐✨"}</p>
           </div>
         )}
         {/* <h3 className="mb-1 text-2xl font-medium">Login</h3>
