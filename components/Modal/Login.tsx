@@ -55,12 +55,12 @@ const LoginModal = ({ isLoginModalOpen, closeLoginModal }) => {
       onClose={closeLoginModal}
       displayCloseButton={false}
     >
-      <div className="flex flex-col w-full p-6">
+      <div className="flex flex-col w-full p-6 bg-base-100 rounded-lg">
         <div className="flex flex-row items-center">
           <h3 className="text-md md:text-xl font-medium mr-2">
             Login to MultiplayerGPT
           </h3>
-          <div className="bg-base-100 rounded-full px-2 text-xs py-1">
+          <div className="bg-base-200 rounded-full px-2 text-xs py-1">
             coming soon
           </div>
         </div>
