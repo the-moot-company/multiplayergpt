@@ -200,7 +200,7 @@ export const Chat = memo(
             value: {
               ...updatedConversation,
               messages: [
-                ...updatedConversation.messages, //.slice(0, -1),
+                ...updatedConversation.messages.slice(0, -1),
                 messageData,
               ],
             },
