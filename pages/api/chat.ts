@@ -6,6 +6,7 @@ import { ChatBody, Message } from '@/types/chat';
 // @ts-expect-error
 import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
 
+import MESSAGE_LIMIT, { message_limit_error } from '@/lib/limit';
 import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
 import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
 
@@ -17,6 +18,13 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { messages, key, prompt, temperature } =
       (await req.json()) as ChatBody;
+
+    if (messages.length > MESSAGE_LIMIT) {
+      return new Response('Error', {
+        status: 400,
+        statusText: message_limit_error,
+      });
+    }
 
     const model = {
       id: 'gpt-3.5-turbo',

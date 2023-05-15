@@ -42,6 +42,7 @@ import { ModelSelect } from './ModelSelect';
 import { SystemPrompt } from './SystemPrompt';
 import { TemperatureSlider } from './Temperature';
 
+import MESSAGE_LIMIT, { message_limit_error } from '@/lib/limit';
 import supabase from '@/lib/supabase';
 import { log } from 'console';
 
@@ -142,6 +143,11 @@ export const Chat = memo(
               messages: [...selectedConversation.messages, message],
             };
           }
+
+          if (updatedConversation.messages.length > MESSAGE_LIMIT) {
+            toast.error(message_limit_error);
+            return;
+          }
           homeDispatch({
             field: 'selectedConversation',
             value: updatedConversation,
@@ -171,7 +177,7 @@ export const Chat = memo(
             value: {
               ...updatedConversation,
               messages: [
-                ...updatedConversation.messages.slice(0, -1),
+                ...updatedConversation.messages, //.slice(0, -1),
                 messageData,
               ],
             },

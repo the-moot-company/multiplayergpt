@@ -88,7 +88,6 @@ const Sidebar = <T,>({
   useEffect(() => {
     const storedValue = localStorage.getItem('name');
     if (storedValue) {
-      console.log('storedValue', storedValue);
       setInputValue(storedValue);
     } else {
       localStorage.setItem('name', name);

@@ -395,7 +395,6 @@ const Home = ({
           const allConversationIds = conversations.map((c) => c.id);
 
           if (!allConversationIds.includes(payload.new.conversationId)) {
-            console.log('message not in current conversation');
             return;
           }
           const selectedConversation = selectedConversationRef.current;
