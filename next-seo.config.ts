@@ -14,7 +14,7 @@ const SEO = {
     description,
     images: [
       {
-        url: 'https://www.multiplayergpt.com/images/muliplayer-gpt.png',
+        url: 'https://www.multiplayergpt.com/images/multiplayer-gpt.png',
         alt: title,
         width: 1280,
         height: 720,
